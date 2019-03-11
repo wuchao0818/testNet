@@ -1,6 +1,6 @@
 import React ,{ Component } from 'react'
 import * as actions from '../model/Action'
-import { Table, Col, Row } from 'antd';
+import { Table } from 'antd';
 
 const columns = [{
     title: '交易ID',
@@ -33,9 +33,7 @@ class Trading extends Component {
         const { data } = this.state
         return (
             <div>
-                {/* <Col xs={24} sm={24} md={24} lg={24} xl={24}> */}
-                    <Table  columns={columns} dataSource={data}  bordered/>
-                {/* </Col> */}
+                <Table  columns={columns} dataSource={data}  bordered/>
            </div>
         );
     }

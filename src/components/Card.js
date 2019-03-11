@@ -30,7 +30,7 @@ class smallCard extends Component {
     }
     shouldComponentUpdate(nextProps,nextState){ //将要改变的那些state和props
         if(nextProps.data.prices!==''){
-            console.log('01、是否更新',nextProps,nextState)
+            // console.log('01、是否更新',nextProps,nextState)
             return true
         }else{
             return false
@@ -49,7 +49,7 @@ class smallCard extends Component {
             
             <div className = 'card'>
             <Spin spinning = {this.state.loading}>
-                <div style={{padding: '3em' }}>
+                <div className = 'cardlist'>
                     <Row gutter={24}>
                     <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                         <Card title={<div style={{textAlign:"left"}}>
@@ -90,7 +90,7 @@ class smallCard extends Component {
                     </Row>
                 </div>
 
-                <div style={{padding: ' 0 3em' }}>
+                <div className = 'cardtwo'>
                     <Row gutter={24}>
                     <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                         <Card title={<div style={{textAlign:"left"}}>

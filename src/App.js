@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
 
-import { BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './page/Home'
 import Account from './page/Account'
+import Reward from './page/Reward'
 import Details from './page/AccountDetails'
 
 function initIronman (callback){
@@ -71,9 +72,12 @@ class App extends Component {
       <Router>
         <div>  
           <Header />
-          <Route path="/" exact component={Home} />
+          <Switch>
+          <Route exact path="/"  component={Home} />
           <Route path="/account" component={Account} />
-          <Route path="/accounts" component={Details} />
+          <Route path="/reward" component={Reward} />
+          <Route path="/details" component={Details} />
+          </Switch>
           <Footer/>
         </div>
     </Router>

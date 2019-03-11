@@ -23,12 +23,12 @@ class AccountForm extends Component {
        this.setState({
            name: name
        })
-       console.log(name)
+    //    console.log(name)
     }
 
     onCreateKey = () => {
         actions.onCreateKey({},(data)=>{
-            console.log(data)
+            // console.log(data)
             this.setState({
                 prikey: data.prikey,
                 pubkey: data.pubkey
@@ -83,7 +83,7 @@ class AccountForm extends Component {
                     <Form.Item {...formItemLayout}
                         label="账号"
                         >
-                        {getFieldDecorator('name', {
+                        {getFieldDecorator('account', {
                             rules: [{
                             required: true, message: '请输入账号',
                             }],
@@ -96,7 +96,7 @@ class AccountForm extends Component {
                     <Form.Item {...formItemLayout}
                         label="私钥"
                         >
-                        {getFieldDecorator('privateKey', {
+                        {getFieldDecorator('prikey', {
                             rules: [{
                             required: true, message: '请输入私钥',
                             }],
@@ -109,7 +109,7 @@ class AccountForm extends Component {
                     <Form.Item {...formItemLayout}
                         label="公钥"
                         >
-                        {getFieldDecorator('publicKey', {
+                        {getFieldDecorator('pubkey', {
                             rules: [{
                             required: true, message: '请输入公钥',
                             }],
@@ -125,7 +125,7 @@ class AccountForm extends Component {
             
                         <Button onClick = {this.onCreateKey} style = {{marginLeft:15}}>随机密钥</Button>
                 
-                        <Button onClick = {this.randomName} style = {{marginLeft:15}}>随机账号</Button>
+                        <Button onClick = {this.randomName} className = 'creatname'>随机账号</Button>
                     </Form.Item>
                 </Form>
             </div>

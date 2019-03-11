@@ -1,9 +1,10 @@
 import React ,{ Component } from 'react';
 
-import { Layout, Menu, Icon, Col, Input} from 'antd';
+import { Layout, Menu, Icon, Col, Input, Popover, message} from 'antd';
 
 import { Link, withRouter } from "react-router-dom";
 import logo from '../image/logo.dd3b009c.svg'
+import menu from '../image/menu.png'
 import config from '../model/Config'
 
 const { Header } = Layout;
@@ -23,8 +24,11 @@ class header extends Component {
         super(props);
         this.state = {  
             current: 'home',
+            account: {}
         };
     }
+
+    
 
     handleClick = (e) => {
         console.log('click ', e);
@@ -34,11 +38,16 @@ class header extends Component {
     }
 
     onSearch = (value) => {
-        console.log(value)
-        fibosClient.getAccount(value).then(getAccount => {//账户名
-            console.log(getAccount);
-      })      
-      
+        fibosClient.getAccount(value).then(getAccount => {
+            // console.log(getAccount);
+            this.setState({
+                current:'details',
+                account: getAccount
+            })
+            this.props.history.push({pathname:'/details',state:{data:this.state.account}})  
+       }).catch(err => {
+            message.error('账户名不存在');
+       })    
     }
 
     componentDidMount(){
@@ -46,7 +55,8 @@ class header extends Component {
         if(array[1]){
             switch(array[1]){
                 case 'account': this.setState({current: 'account'});break;
-                case 'accounts': this.setState({current: 'accounts'});break;
+                case 'reward': this.setState({current: 'reward'});break;
+                case 'details': this.setState({current: 'details'});break;
                 default: break;
             }
         }else {
@@ -57,14 +67,46 @@ class header extends Component {
     }
 
     render(){
+        const suffix =  <span />;
+        const prefix =  <span />;
+  
+        const content = (
+            <Menu
+            mode="vertical"
+            onClick={this.handleClick}
+            selectedKeys={[this.state.current]}
+        
+        >
+            <Menu.Item key="home">
+                <Link to="/">
+                    <Icon type="home" />首页
+                </Link>                  
+            </Menu.Item>
+
+            <SubMenu title={<span className="submenu-title-wrapper" key="sub1"><Icon type="setting" />
+            账号
+            </span>}>
+                <Menu.Item key="account">
+                <span>
+                    <Link to="/account">创建</Link>
+                </span>
+                </Menu.Item>
+                <Menu.Item key="reward">
+                <span>
+                    <Link to="/reward">奖励</Link>
+                </span>
+                </Menu.Item>              
+            </SubMenu>
+        </Menu>
+        )
         return (
             <Layout className = 'header'>
                 <Header>
-                    <div className="logo" >
-                        <img src = {logo} alt = '' style = {{height: '32px'}}/>
-                        <span>Fun Testnet</span>
-                    </div> 
-                    <Col xs={0} sm={0} md={0} lg={15} xl={15}>
+                    <Col xs={0} sm={0} md={14} lg={15} xl={18}>
+                        <div className="logo" >
+                            <img src = {logo} alt = '' style = {{height: '32px'}}/>
+                            <span>Fun Testnet</span>
+                        </div> 
 
                         <Menu
                             onClick={this.handleClick}
@@ -85,20 +127,31 @@ class header extends Component {
                                 <span>
                                     <Link to="/account">创建</Link>
                                 </span>
-                                </Menu.Item>           
+                                </Menu.Item>
+                                <Menu.Item key="reward">
+                                <span>
+                                    <Link to="/reward">空投</Link>
+                                </span>
+                                </Menu.Item>              
                             </SubMenu>
-                            <Menu.Item key="accounts">
-                                <Link to="/accounts">
-                                    <Icon type="home" />账户详情
-                                </Link>                  
-                            </Menu.Item>
                         </Menu>
+                    </Col>
+                    <Col xs={10} sm={12} md={0} lg={0} xl={0}>
+                        <div className="logo" >
+                            <img src = {logo} alt = '' style = {{height: '32px'}}/>
+                        </div> 
+                        <Popover placement="bottomRight" content={content} trigger="click">
+                            <img src={menu} alt="" className='smallmenuImg' ></img>
+                        </Popover>
+
                     </Col>
                     <div>
                         <Search
+                            suffix={suffix} 
+                            prefix = {prefix}
                             placeholder="账号"
                             onSearch={this.onSearch.bind(this)}
-                            style={{ width: 300}}
+                            className = 'serach'
                             />
                     </div>
                 </Header>

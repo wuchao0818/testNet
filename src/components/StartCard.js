@@ -31,7 +31,7 @@ class StartCard extends Component {
         return (
             <div>
                 <Spin spinning = {this.state.loading}>
-                <div style={{ padding: '3em' }}>
+                <div className = 'cardlist'>
                     <Row gutter={24}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Card title="快速开始" bordered={false}>

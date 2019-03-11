@@ -1,13 +1,23 @@
 import React ,{ Component } from 'react';
-import { Collapse, Card, Row, Col, Table, Tabs} from 'antd';
+import { Collapse, Card, Row, Col, Table, Tabs, Tag} from 'antd';
+import config from '../model/Config'
+
+import  * as actions from '../model/Action'
+import timer from '../model/Time'
 
 import Assets from '../components/Assets'
-import Actions from '../components/Actions'
+
+
+var FIBOS = require('fibos.js');
+const fibosClient = FIBOS(config.client)
 
 const TabPane = Tabs.TabPane;
 
 const Panel = Collapse.Panel;
 
+
+
+/* 权限表格 */
 const columns = [{
     title: '权限',
     dataIndex: 'permissions',
@@ -18,32 +28,139 @@ const columns = [{
     key: 'authorization',
 }];
 
-const dataSource = [{
-    key: '1',
-    permissions: 'active',
-    authorization: 'FO7JUKHFSdFSiRk5MUxHjoespzxw7sYYSkWjeUJzLQYkvb8nj4od'
-    }, {
-    key: '2',
-    permissions: 'owner',
-    authorization: 'FO7JUKHFSdFSiRk5MUxHjoespzxw7sYYSkWjeUJzLQYkvb8nj4od',
-}];
+/* 动作表格 */
+const columnsAction = [{
+    title: '区块ID',
+    dataIndex: 'id',
+    key: 'id',
+  },
+  {
+    title: '时间',
+    dataIndex: 'time',
+    key: 'time',
+  },
+   {
+    title: '交易类型',
+    dataIndex: 'type',
+    key: 'type',
+    render:( type ) =>{
+        let color = type === ('transfer'||'extransfer')? 'red' : 'green';
+        return(
+            <Tag color={color} >{type.toUpperCase()}</Tag>
+        )    
+    }
+  }, {
+    title: '转入方',
+    dataIndex: 'from',
+    key: 'from',
+  },
+  {
+    title: '转出方',
+    dataIndex: 'to',
+    key: 'to',
+  },
+  {
+    title: '信息',
+    dataIndex: 'information',
+    key: 'information',
+  }];
 
 class AccountDetails extends Component {
     constructor(props) {
         super(props);
-        this.state = {  };
+        this.state = {
+            Tokens: [],
+            dataList:[]
+        };
     }
+
+    getPermissions = () => {
+        fibosClient.getTableRows(
+            true, 
+            "eosio.token", 
+            this.props.history.location.state.data.account_name, 
+            "accounts")
+        .then(res=>{
+            this.setState({
+                Tokens: res.rows
+            })
+        console.log(res,'getTableRows','4、组件挂载完成触发的周期函数')
+       })
+    }
+
+    getActions = () => {
+        let values = {
+            account_name : this.props.history.location.state.data.account_name
+          }
+          actions.getActions(values,(data) => {
+              this.setState({
+                dataList: data.actions
+              })
+          })
+    }
+
+    componentDidMount(){   
+        this.getPermissions()
+        this.getActions()
+    }
+
+    componentWillReceiveProps(){
+        this.getPermissions()
+        this.getActions()
+        console.log(this.props,'5.父组件传值改变后触发的周期函数,在所有更新数据周期函数前触发')
+    }
+      /* 将要更新数据的时候触发 */
+    componentWillUpdate(){
+    } 
+     /* 组件更新完成 */
+     componentDidUpdate(){
+    }
+
     render() {
+        /* 权限 */
+        const data = this.props.history.location.state.data;
+        let dataSource = []
+        data.permissions.map((value,key)=>{
+            dataSource.push({
+                key: key,
+                permissions: value.perm_name,
+                authorization: value.required_auth.keys.map((item,index)=>{
+                    return item.key + ' '
+                })
+            })
+            return data
+
+        })
+
+      /* 动作 */
+      const { dataList } = this.state
+      let dataAction = []
+        if(dataList.length > 0){
+            dataList.map((value ,key)=>{
+                dataAction.push({
+                    key: key,
+                    id: value.block_num,
+                    time: timer.formatDateTime(value.block_time),
+                    type: value.action_trace.act.name,
+                    from: value.action_trace.act.data.from,
+                    to: value.action_trace.act.data.to,
+                    information: value.action_trace.act.data.memo
+                })
+                return dataAction
+            })
+        }
+      
+
         return (
             <div className = 'accountsdetails'>
                 <div className = 'accounts'>
                     <div className = 'details'>
-                        <h3>silver123451  <span>创建于2018年9月12日 11:14:41</span></h3>
+                        <h3>{data.account_name}  <span className = 'created'>创建于 {timer.formatDateTime(data.created)}</span></h3>
                     </div> 
                     <div style = {{paddingTop: '30px'}}>                       
                         <Collapse defaultActiveKey={['1']}>
                             <Panel header="资产" key="1">
-                                <Assets/>
+                                <Assets data = {data} balance = {this.state.Tokens}/>
                             </Panel>
                         </Collapse>                      
                     </div>              
@@ -52,13 +169,19 @@ class AccountDetails extends Component {
                     <Collapse defaultActiveKey={['1']}>
                         <Panel header="持有代币" key="1">
                             <Row gutter={16}>
-                                <Col xs={24} sm={12} md={12} lg={6} xl={6}>
-                                    <Card>
-                                        <p>FO 余额</p>
-                                        <p>0 FO</p>
-                                        <p>≈ 0.00CNY</p>
-                                    </Card>
-                                </Col>
+                                
+                                {
+                                    this.state.Tokens.map((value,index)=>{
+                                        return(     
+                                        <Col xs={24} sm={12} md={12} lg={6} xl={6} key = {index}>
+                                            <Card title = {`发行方：${value.balance.contract}`}>
+                                                <p>数量： {value.balance.quantity}</p>
+                                            </Card>
+                                        </Col>
+                                        )
+                                    })
+                                    }
+                                
                             </Row>
                         </Panel>
                     </Collapse>
@@ -73,7 +196,11 @@ class AccountDetails extends Component {
                 <div className = 'actions'>
                     <Tabs defaultActiveKey="1">
                         <TabPane tab="动作" key="1">
-                            <Actions/>
+
+                           
+                             <div>
+                               <Table columns={columnsAction}  dataSource = {dataAction}/>,
+                             </div> 
                         </TabPane>              
                     </Tabs>
                 </div>

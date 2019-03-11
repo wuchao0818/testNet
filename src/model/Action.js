@@ -17,10 +17,6 @@ export const randomName = (randomFlag, min, max) => {
           str += arr[pos]
         }
         return str
-      
-    //   this.form.setFieldsValue({
-    //     account: randomWord(false, 12)
-    // })
 }
 
 /* 随机秘钥 */
@@ -29,7 +25,6 @@ export const onCreateKey = (data, sucCb) =>{
     axios.post('/1.0/app/token/createkey', {})
     .then(res => {
       if(!!res){
-        console.log(res)
         if (!!sucCb) {
           sucCb(res.data);
         }
@@ -44,19 +39,52 @@ export const onCreateKey = (data, sucCb) =>{
 export const creatAccount = (data, sucCb) =>{
     axios.post('/1.0/app/token/create', data)
       .then(res => {
+        message.success('创建成功');
         if(!!res){
-          console.log(res)
-          message.success('创建成功');
           if (!!sucCb) {
             sucCb();
           }
         }
       })
       .catch(err => {
-        message.success('创建失败');
+        message.err('创建失败');
+        console.log(err)
+      })
+ }
+
+ /* 获取奖励 */
+export const getreward = (data,sucCb) => {
+    axios.post('/1.0/app/user/getreward', data )
+      .then(res => {
+        message.success('领取成功');
+        if(!!res){
+          if (!!sucCb) {
+            sucCb();
+          }
+        }
+      })
+      .catch(err => {
+        message.error('获取失败');
         console.log(err)
       })
 }
+
+/* 获取action */
+export const getActions = (data,sucCb) => {
+    axios.post('/v1/history/get_actions', data )
+      .then(res => {
+        if(!!res){
+          if (!!sucCb) {
+            sucCb(res.data);
+          }
+        }
+      })
+      .catch(err => {
+        message.error('获取action失败');
+        console.log(err)
+      })
+}
+
 
 
 
@@ -96,19 +124,3 @@ export const TradingList = () => {
 
 
 
-
-// export const actionsList = () => {
-//   const data = [];
-//   let  id = Math.random().toString(36).substr(2);
-
-//   for (let i = 0; i < 26; i++) {
-//       data.push({
-//         key: i,
-//         id: id,
-//         type: `fibosProducer ${i}`,
-//         time:  `EosToken ${i+10}`,
-//         information: 
-//       });
-//    }
-//   return data
-// }

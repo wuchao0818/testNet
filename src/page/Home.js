@@ -1,5 +1,5 @@
 import React ,{ Component } from 'react';
-import { Tabs, Icon} from 'antd';
+// import { Tabs, Icon} from 'antd';
 import axios from 'axios'
 
 import  * as config from '../model/Axios'
@@ -7,14 +7,14 @@ import timer from '../model/Time'
 
 import Card from '../components/Card'
 import StartCard from '../components/StartCard'
-import Block from '../components/Block'
-import Trading from '../components/Trading'
+// import Block from '../components/Block'
+// import Trading from '../components/Trading'
 
-const IconFont = Icon.createFromIconfontCN({
-    scriptUrl: '////at.alicdn.com/t/font_1075224_npc0ip0rnje.js',
-});
+// const IconFont = Icon.createFromIconfontCN({
+//     scriptUrl: '////at.alicdn.com/t/font_1075224_npc0ip0rnje.js',
+// });
 
-const TabPane = Tabs.TabPane;
+// const TabPane = Tabs.TabPane;
 
 
 class Home extends Component {
@@ -23,14 +23,14 @@ class Home extends Component {
         this.state = {  
             chain_id:'',
             head_block_time: '',//时间
-            head_block_num: '',//当前区块
-            last_irreversible_block_num: '',//最新不可逆区块
+            head_block_num: '0',//当前区块
+            last_irreversible_block_num: '0',//最新不可逆区块
             head_block_producer: '',//当前节点
             server_version_string: '', //版本
             server_version:'', //版本号
             diff: '' ,//相差
 
-            price: '' , //FO流通数量
+            price: '0' , //FO流通数量
             supply: '', //流通
             reserve_supply:'' ,//锁仓数量
             b_cw: '', //CW 
@@ -124,7 +124,6 @@ class Home extends Component {
                 const price = (bCw * (bReserveSupply + bSupply) / bBalances)
                     .toFixed(supplyNumPre, 8)
 
-                console.log(price,supply,reserveSupply,bCw,'1111111111')
                 this.setState({
                     price: price + ' FO',
                     supply: supply,
@@ -141,7 +140,6 @@ class Home extends Component {
     /* 垮链账户 */
     getAccount = () => {
         config.postTable(true, 'eosio.token', 'fiboscouncil', 'accounts',(data) => {
-            console.log(data,'垮链账户')
             let rows = data.rows
             for (const i in rows) {
                 const {
@@ -160,7 +158,6 @@ class Home extends Component {
     /* 内存 */
     getmemory = () =>{
         config.postTable(true, 'eosio', 'eosio', 'rammarket',(data)=>{
-            console.log(data,'内存')
             const rows = data.rows[0]
             const {
               base,
@@ -230,18 +227,17 @@ class Home extends Component {
         this.setState = (state,callback)=>{
             return;
         };
-        console.log('componentWillUnmount')
         clearInterval(this.timer);
     }
 
 
     render() {
         return (
-            <div style = {{padding: '0 50px'}}>
+            <div style = {{padding: '0 1.5em'}}>
                 <Card  data = {this.state}/>
                 <StartCard data = {this.state.chain_id}/>
 
-                <div className = 'tabs'>
+                {/* <div className = 'tabs'>
                     <Tabs defaultActiveKey="1" >
                         <TabPane tab={<span><IconFont type="icon-icon-" />区块</span>} key="1">
                             <Block/>
@@ -250,7 +246,7 @@ class Home extends Component {
                             <Trading/>
                         </TabPane>
                     </Tabs>
-                </div>
+                </div> */}
                 
             </div>
         );

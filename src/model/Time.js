@@ -8,7 +8,13 @@ var time = {
         m = m < 10 ? ('0' + m) : m;
         var d = newdate.getDate();
         d = d < 10 ? ('0' + d) : d;
-        return y + '-' + m + '-' + d+' '
+        var h = newdate.getHours();
+        h= h < 10 ? ('0' + h) : h;
+        var min = newdate.getMinutes();
+        min= min < 10 ? ('0' + min) : min;
+        var s = newdate.getSeconds();
+        s = s < 10 ? ('0' + s) : s;
+        return y + '-' + m + '-' + d+' ' + h+':'+min+':'+s
     },
     getNowFormatDate(){
         var date = new Date();
