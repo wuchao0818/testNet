@@ -16,7 +16,6 @@ const TabPane = Tabs.TabPane;
 const Panel = Collapse.Panel;
 
 
-
 /* 权限表格 */
 const columns = [{
     title: '权限',
@@ -130,11 +129,20 @@ class AccountDetails extends Component {
             title: '数据',
             dataIndex: 'data',
             key: 'data',
-            render: ( data,record ) =>{
+            render: ( data, record ) =>{
                 if(data.length === 4 ){
-                    return(
-                        <p>{data[0]} <Icon type="arrow-right" /> { data[1]}，&nbsp;&nbsp; 金额：{ data[2] }， &nbsp;&nbsp;&nbsp; 备注：{ data[3]}</p>
-                    )
+
+                    let color  = 'red'   
+                    if(data[0] === this.props.history.location.state.data.account_name){
+                        return(
+                            <p><span style = {{color:color}}>{data[0]}</span> <Icon type="arrow-right" /> <span>{ data[1]}</span>，&nbsp;&nbsp; 金额：{ data[2] }， &nbsp;&nbsp;&nbsp; 备注：{ data[3]}</p>
+                        )  
+                    } 
+                    if(data[1] === this.props.history.location.state.data.account_name){
+                        return(
+                            <p><span>{data[0]}</span> <Icon type="arrow-right" /> <span style = {{color:color}}>{ data[1]}</span>，&nbsp;&nbsp; 金额：{ data[2] }， &nbsp;&nbsp;&nbsp; 备注：{ data[3]}</p>
+                        ) 
+                    }                 
                 }else{
                     return(
                         ''
@@ -249,9 +257,11 @@ class AccountDetails extends Component {
                     onCancel={this.handleCancel}
                     >
                     <div>
-                    
-                            {JSON.stringify(this.state.obj)}
-                        
+                        <pre>
+                            <code>
+                                {JSON.stringify((this.state.obj),null,4)}
+                            </code>
+                        </pre>
                     </div>
                 </Modal>
             </div>
