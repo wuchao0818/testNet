@@ -60,7 +60,7 @@ const columnsAction = [{
     key: 'to',
   },
   {
-    title: '信息',
+    title: '备注',
     dataIndex: 'information',
     key: 'information',
   }];
@@ -84,7 +84,6 @@ class AccountDetails extends Component {
             this.setState({
                 Tokens: res.rows
             })
-        console.log(res,'getTableRows','4、组件挂载完成触发的周期函数')
        })
     }
 
@@ -107,7 +106,6 @@ class AccountDetails extends Component {
     componentWillReceiveProps(){
         this.getPermissions()
         this.getActions()
-        console.log(this.props,'5.父组件传值改变后触发的周期函数,在所有更新数据周期函数前触发')
     }
       /* 将要更新数据的时候触发 */
     componentWillUpdate(){

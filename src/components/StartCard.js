@@ -35,7 +35,7 @@ class StartCard extends Component {
                     <Row gutter={24}>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Card title="快速开始" bordered={false}>
-                            {this.props.data}
+                            <p className = 'chainID'> {this.props.data} </p>
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>

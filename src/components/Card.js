@@ -19,14 +19,13 @@ class smallCard extends Component {
     }
 
     componentDidMount(){
-        // console.log('componentDidMount')
     }
 
     componentDidUpdate(){
-        if(this.state.loading){
-            this.loading()
-            console.log('04、组件数据更新完成',this.props)
-        }
+        // if(this.state.loading){
+        //     this.loading()
+        //     console.log('04、组件数据更新完成',this.props)
+        // }
     }
     shouldComponentUpdate(nextProps,nextState){ //将要改变的那些state和props
         if(nextProps.data.prices!==''){
@@ -38,10 +37,10 @@ class smallCard extends Component {
     }
 
     componentWillReceiveProps(){
-        // if(this.state.loading){
-        //     this.loading()
-        //     console.log('父组件传值改变后触发的周期函数,在所有更新数据周期函数前触发')
-        // }
+        if(this.state.loading){
+            this.loading()
+            console.log('父组件传值改变后触发的周期函数,在所有更新数据周期函数前触发')
+        }
     }
 
     render() {

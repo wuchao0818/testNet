@@ -22,7 +22,7 @@ class Assets extends Component {
     }
 
     componentDidUpdate(){
-        console.log(this.props,'组件更新完成')
+        // console.log(this.props,'组件更新完成')
     }
     
     render() {
@@ -101,7 +101,7 @@ class Assets extends Component {
                             <div>
                                 <Progress percent={ resources_percent } status="active" />
                             </div>
-                            <p className = 'resources'>{resources} / {FObalance}</p>
+                            {resources === -1 ? '' : <p className = 'resources'>{resources} / {FObalance}</p>}
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={6} xl={6} style = {gridStyle}>
@@ -111,7 +111,7 @@ class Assets extends Component {
                             <div>
                                 <Progress percent={ram_percent} status="active" />
                             </div>
-                            <p className = 'resources'>{ram_usage.toFixed(2)} / {ram_quota.toFixed(2)}</p>              
+                            {ram_available === -1 ? '' : <p className = 'resources'>{ram_usage.toFixed(2)} / {ram_quota.toFixed(2)}</p> }           
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={6} xl={6} style = {gridStyle}>
@@ -121,7 +121,7 @@ class Assets extends Component {
                             <div>
                                 <Progress percent={cpu_percent} status="active" />
                             </div>
-                            <p className = 'resources'>{cpu_used} / {cpu_max}</p>
+                            {cpu_available === -1 ? '' : <p className = 'resources'>{cpu_used} / {cpu_max}</p>}
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={6} xl={6} style = {gridStyle}>
@@ -131,7 +131,7 @@ class Assets extends Component {
                             <div>
                                 <Progress percent={net_percent} status="active" />
                             </div>
-                            <p className = 'resources'>{net_used} / {net_max.toFixed(2)}</p>
+                            {net_available === -1 ? '' : <p className = 'resources'>{net_used} / {net_max.toFixed(2)}</p>}
                         </Card>
                     </Col>
                 </Row>
