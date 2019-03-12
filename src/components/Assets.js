@@ -61,7 +61,7 @@ class Assets extends Component {
         const net_used = data.net_limit.used
         const net_max = data.net_limit.max/1024
         /* FO 余额 */
-        const FObalance = resources === -1 ? quantity.FO : Number(quantity.FO + resources)
+        const FObalance = resources === -1 ? Number(quantity.FO) : Number(quantity.FO) + resources
 
 
         const resources_percent = resources === -1 ? 100 : Number(((resources/FObalance)*100).toFixed(2))
@@ -77,7 +77,7 @@ class Assets extends Component {
                     <Col xs={24} sm={12} md={12} lg={8} xl={8} style = {gridStyle}>
                         <Card bordered={false}>
                             <p className = 'balance'>FO 余额</p>
-                            <p className = 'num'> {FObalance} <span className = 'balance'>FO</span></p>
+                            <p className = 'num'> {FObalance.toFixed(2)} <span className = 'balance'>FO</span></p>
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={8} xl={8} style = {gridStyle}>

@@ -1,5 +1,5 @@
 import React ,{ Component } from 'react';
-import { Collapse, Card, Row, Col, Table, Tabs, Tag} from 'antd';
+import { Collapse, Card, Row, Col, Table, Tabs, Tag ,Icon, Modal} from 'antd';
 import config from '../model/Config'
 
 import  * as actions from '../model/Action'
@@ -28,51 +28,39 @@ const columns = [{
     key: 'authorization',
 }];
 
-/* 动作表格 */
-const columnsAction = [{
-    title: '区块ID',
-    dataIndex: 'id',
-    key: 'id',
-  },
-  {
-    title: '时间',
-    dataIndex: 'time',
-    key: 'time',
-  },
-   {
-    title: '交易类型',
-    dataIndex: 'type',
-    key: 'type',
-    render:( type ) =>{
-        let color = type === ('transfer'||'extransfer')? 'red' : 'green';
-        return(
-            <Tag color={color} >{type.toUpperCase()}</Tag>
-        )    
-    }
-  }, {
-    title: '转入方',
-    dataIndex: 'from',
-    key: 'from',
-  },
-  {
-    title: '转出方',
-    dataIndex: 'to',
-    key: 'to',
-  },
-  {
-    title: '备注',
-    dataIndex: 'information',
-    key: 'information',
-  }];
 
 class AccountDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            visible: false,
             Tokens: [],
-            dataList:[]
+            dataList:[],
+            obj: {}
         };
     }
+
+      showModal = (key) => {
+          let data = this.state.dataList[key].action_trace.act.data
+            this.setState({
+                visible: true,
+                obj: data
+            });
+      }
+    
+      handleOk = (e) => {
+            this.setState({
+                visible: false,
+            });
+      }
+    
+      handleCancel = (e) => {
+            this.setState({
+                visible: false,
+            });
+      }
+    
+    
 
     getPermissions = () => {
         fibosClient.getTableRows(
@@ -92,6 +80,7 @@ class AccountDetails extends Component {
             account_name : this.props.history.location.state.data.account_name
           }
           actions.getActions(values,(data) => {
+            //   console.log(data,'actions')
               this.setState({
                 dataList: data.actions
               })
@@ -115,6 +104,57 @@ class AccountDetails extends Component {
     }
 
     render() {
+
+        /* 动作表格 */
+        const columnsAction = [{
+            title: '区块ID',
+            dataIndex: 'id',
+            key: 'id',
+        },
+        {
+            title: '时间',
+            dataIndex: 'time',
+            key: 'time',
+        },
+        {
+            title: '交易类型',
+            dataIndex: 'type',
+            key: 'type',
+            render:( type ) =>{
+                let color = type === 'transfer' || type === 'extransfer'? 'red' : 'green';
+                return(
+                    <Tag color={color} >{type}</Tag>
+                )    
+            }
+        }, {
+            title: '数据',
+            dataIndex: 'data',
+            key: 'data',
+            render: ( data,record ) =>{
+                if(data.length === 4 ){
+                    return(
+                        <p>{data[0]} <Icon type="arrow-right" /> { data[1]}，&nbsp;&nbsp; 金额：{ data[2] }， &nbsp;&nbsp;&nbsp; 备注：{ data[3]}</p>
+                    )
+                }else{
+                    return(
+                        ''
+                    )
+                }
+            }       
+        },{
+            title: '查看',
+            dataIndex: 'view',
+            key: 'view',
+            render: (text, record, index) =>{
+                return(
+                <span onClick={this.showModal.bind(this,index)}>
+                        <a href="javascript:;">详情</a>
+                </span>
+                )
+            }
+        }];
+
+
         /* 权限 */
         const data = this.props.history.location.state.data;
         let dataSource = []
@@ -140,13 +180,15 @@ class AccountDetails extends Component {
                     id: value.block_num,
                     time: timer.formatDateTime(value.block_time),
                     type: value.action_trace.act.name,
-                    from: value.action_trace.act.data.from,
-                    to: value.action_trace.act.data.to,
-                    information: value.action_trace.act.data.memo
+                    data: (value.action_trace.act.data.from && value.action_trace.act.data.quantity) ? 
+                          [value.action_trace.act.data.from, value.action_trace.act.data.to, value.action_trace.act.data.quantity.quantity, value.action_trace.act.data.memo] :
+                          ''
                 })
                 return dataAction
             })
         }
+    
+  
       
 
         return (
@@ -193,15 +235,25 @@ class AccountDetails extends Component {
                 </div>
                 <div className = 'actions'>
                     <Tabs defaultActiveKey="1">
-                        <TabPane tab="动作" key="1">
-
-                           
+                        <TabPane tab="动作" key="1">                         
                              <div>
-                               <Table columns={columnsAction}  dataSource = {dataAction}/>,
+                               <Table columns={columnsAction}  dataSource = {dataAction} bordered/>,
                              </div> 
                         </TabPane>              
                     </Tabs>
                 </div>
+                <Modal
+                    title="动作详情"
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    >
+                    <div>
+                    
+                            {JSON.stringify(this.state.obj)}
+                        
+                    </div>
+                </Modal>
             </div>
             
         );
