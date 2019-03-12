@@ -155,7 +155,7 @@ class AccountDetails extends Component {
             key: 'view',
             render: (text, record, index) =>{
                 return(
-                <span onClick={this.showModal.bind(this,index)}>
+                <span onClick={this.showModal.bind(this,record.key)}>
                         <a href="javascript:;">详情</a>
                 </span>
                 )
