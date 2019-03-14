@@ -13,7 +13,7 @@ class Footer extends Component {
                 <div className = 'footer'>
                     <p>
                     
-                        <a href = 'https://fibo.io/'>FIBOS</a>
+                        <a href = 'https://fibos.io/'>FIBOS</a>
                     
                         <a href = 'https://github.com/FIBOSIO'><Icon type="github" /></a>
                     
