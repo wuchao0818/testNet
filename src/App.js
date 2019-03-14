@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import './App.scss';
 
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Home from './page/Home'
-import Account from './page/Account'
-import Reward from './page/Reward'
-import Details from './page/AccountDetails'
+import Header from './components/Header/index'
+import Footer from './components/Footer/index'
+import Home from './page/Home/index'
+import Account from './page/Account/index'
+import Reward from './page/Reward/index'
+import Details from './page/Details/index'
 
 function initIronman (callback){
   document.addEventListener('ironmanLoaded', ironmanExtension =>{
