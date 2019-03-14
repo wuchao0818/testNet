@@ -187,9 +187,7 @@ class Home extends Component {
             const totalActivatedStake = rows.total_activated_stake
             this.setState({
                 vote: (Number(totalActivatedStake) - 1500000000000) / 10000 + ' FO',
-                percent: ''
-            })
-            this.setState({
+                percent: '',
                 show: this.state.show,
                 max_ram_size: Number(maxRamSize),
                 ram_used: this.state.ram_used,

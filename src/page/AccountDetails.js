@@ -189,7 +189,7 @@ class AccountDetails extends Component {
                     time: timer.formatDateTime(value.block_time),
                     type: value.action_trace.act.name,
                     data: (value.action_trace.act.data.from && value.action_trace.act.data.quantity) ? 
-                          [value.action_trace.act.data.from, value.action_trace.act.data.to, value.action_trace.act.data.quantity.quantity, value.action_trace.act.data.memo] :
+                          [value.action_trace.act.data.from, value.action_trace.act.data.to, value.action_trace.act.data.quantity.quantity ? value.action_trace.act.data.quantity.quantity : value.action_trace.act.data.quantity, value.action_trace.act.data.memo] :
                           ''
                 })
                 return dataAction
