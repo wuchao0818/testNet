@@ -22,7 +22,7 @@ class Assets extends Component {
     }
 
     componentDidUpdate(){
-        console.log(this.props,'组件更新完成')
+        // console.log(this.props,'组件更新完成')
     }
     
     render() {
@@ -31,19 +31,20 @@ class Assets extends Component {
         /* 余额 */
         const quantity = {}
         balance.map((value,index)=>{
+
             if(value.balance.quantity.indexOf("EOS") > -1){
                 quantity.EOS = parseFloat(value.balance.quantity).toFixed(4)
-            }else{
-                quantity.EOS = 0
             }
 
             if(value.balance.quantity.indexOf("FO") > -1){
                 quantity.FO = parseFloat(value.balance.quantity).toFixed(4)
-            }else{
-                quantity.FO = 0
             }
             return balance
         })
+        
+        quantity.EOS =quantity.EOS ? quantity.EOS : 0 
+
+        quantity.FO = quantity.FO ? quantity.FO : 0 
 
 
         /* 资源 */
