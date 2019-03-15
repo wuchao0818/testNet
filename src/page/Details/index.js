@@ -27,6 +27,10 @@ const columns = [{
     key: 'authorization',
 }];
 
+function sortUpDate(a, b) {
+    return Date.parse(b.block_time) - Date.parse(a.block_time);
+}
+
 
 class AccountDetails extends Component {
     constructor(props) {
@@ -79,7 +83,7 @@ class AccountDetails extends Component {
             account_name : this.props.history.location.state.data.account_name
           }
           actions.getActions(values,(data) => {
-            //   console.log(data,'actions')
+              data.actions.sort(sortUpDate)
               this.setState({
                 dataList: data.actions
               })
@@ -145,7 +149,7 @@ class AccountDetails extends Component {
                     }                 
                 }else{
                     return(
-                        ''
+                       <p> {JSON.stringify((data),null,4)}</p>
                     )
                 }
             }       
@@ -153,6 +157,7 @@ class AccountDetails extends Component {
             title: '查看',
             dataIndex: 'view',
             key: 'view',
+            className: 'detail',
             render: (text, record, index) =>{
                 return(
                 <span onClick={this.showModal.bind(this,record.key)}>
@@ -190,7 +195,7 @@ class AccountDetails extends Component {
                     type: value.action_trace.act.name,
                     data: (value.action_trace.act.data.from && value.action_trace.act.data.quantity) ? 
                           [value.action_trace.act.data.from, value.action_trace.act.data.to, value.action_trace.act.data.quantity.quantity ? value.action_trace.act.data.quantity.quantity : value.action_trace.act.data.quantity, value.action_trace.act.data.memo] :
-                          ''
+                          value.action_trace.act.data
                 })
                 return dataAction
             })

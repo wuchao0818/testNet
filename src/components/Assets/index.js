@@ -22,7 +22,7 @@ class Assets extends Component {
     }
 
     componentDidUpdate(){
-        // console.log(this.props,'组件更新完成')
+        console.log(this.props,'组件更新完成')
     }
     
     render() {
@@ -32,13 +32,13 @@ class Assets extends Component {
         const quantity = {}
         balance.map((value,index)=>{
             if(value.balance.quantity.indexOf("EOS") > -1){
-                quantity.EOS = parseFloat(value.balance.quantity).toFixed(2)
+                quantity.EOS = parseFloat(value.balance.quantity).toFixed(4)
             }else{
                 quantity.EOS = 0
             }
 
             if(value.balance.quantity.indexOf("FO") > -1){
-                quantity.FO = parseFloat(value.balance.quantity).toFixed(2)
+                quantity.FO = parseFloat(value.balance.quantity).toFixed(4)
             }else{
                 quantity.FO = 0
             }
@@ -77,7 +77,7 @@ class Assets extends Component {
                     <Col xs={24} sm={12} md={12} lg={8} xl={8} style = {gridStyle}>
                         <Card bordered={false}>
                             <p className = 'balance'>FO 余额</p>
-                            <p className = 'num'> {FObalance.toFixed(2)} <span className = 'balance'>FO</span></p>
+                            <p className = 'num'> {FObalance.toFixed(4)} <span className = 'balance'>FO</span></p>
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={8} xl={8} style = {gridStyle}>
@@ -101,7 +101,7 @@ class Assets extends Component {
                             <div>
                                 <Progress percent={ resources_percent } status="active" />
                             </div>
-                            {resources === -1 ? '' : <p className = 'resources'>{resources} / {FObalance}</p>}
+                            {resources === -1 ? '' : <p className = 'resources'>{resources} / {FObalance.toFixed(4)}</p>}
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={6} xl={6} style = {gridStyle}>
