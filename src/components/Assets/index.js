@@ -42,7 +42,7 @@ class Assets extends Component {
             return balance
         })
         
-        quantity.EOS =quantity.EOS ? quantity.EOS : 0 
+        quantity.EOS = quantity.EOS ? quantity.EOS : 0 
 
         quantity.FO = quantity.FO ? quantity.FO : 0 
 

@@ -1,22 +1,17 @@
 import React ,{ Component } from 'react';
 
-import { Layout, Menu, Icon, Col, Input, Popover, message} from 'antd';
+import { Layout, Menu, Icon, Col, Input, Popover} from 'antd';
+
+import  * as actions from './action';
 
 import { Link, withRouter } from "react-router-dom";
 import logo from '../../image/logo.dd3b009c.svg'
 import menu from '../../image/menu.png'
-import config from '../../model/Config'
+
 
 const { Header } = Layout;
 const SubMenu = Menu.SubMenu;
 const Search = Input.Search;
-
-var FIBOS = require('fibos.js');
-const fibosClient = FIBOS(config.client)
-
-
-
-
 
 
 class header extends Component {
@@ -28,8 +23,6 @@ class header extends Component {
         };
     }
 
-    
-
     handleClick = (e) => {
         console.log('click ', e);
         this.setState({
@@ -38,16 +31,16 @@ class header extends Component {
     }
 
     onSearch = (value) => {
-        fibosClient.getAccount(value).then(getAccount => {
-            // console.log(getAccount);
+        let values = {
+            account_name : value
+          }
+        actions.getAccount(values,(getAccount)=>{
             this.setState({
                 current:'details',
                 account: getAccount
             })
-            this.props.history.push({pathname:'/details',state:{data:this.state.account}})  
-       }).catch(err => {
-            message.error('账户名不存在');
-       })    
+            this.props.history.push({pathname:'/details',state:{data:this.state.account}})       
+        })    
     }
 
     componentDidMount(){

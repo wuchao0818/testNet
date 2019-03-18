@@ -1,6 +1,5 @@
 import React ,{ Component } from 'react';
 import { Collapse, Card, Row, Col, Table, Tabs, Tag ,Icon, Modal} from 'antd';
-import config from '../../model/Config'
 
 import  * as actions from './action'
 import util from '../../model/util'
@@ -8,8 +7,6 @@ import util from '../../model/util'
 import Assets from '../../components/Assets/index'
 
 
-var FIBOS = require('fibos.js');
-const fibosClient = FIBOS(config.client)
 
 const TabPane = Tabs.TabPane;
 
@@ -66,16 +63,19 @@ class AccountDetails extends Component {
     
 
     getPermissions = () => {
-        fibosClient.getTableRows(
-            true, 
-            "eosio.token", 
-            this.props.history.location.state.data.account_name, 
-            "accounts")
-        .then(res=>{
+        let values = {
+            code: "eosio.token",
+            json: true,
+            scope: this.props.history.location.state.data.account_name,
+            table: "accounts",
+        }
+        actions.getPermissions(values, (data) =>{
+            console.log(data,'getPermissions')
             this.setState({
-                Tokens: res.rows
+                Tokens: data.rows
             })
-       })
+
+        })
     }
 
     getActions = () => {
@@ -133,6 +133,7 @@ class AccountDetails extends Component {
             title: '数据',
             dataIndex: 'data',
             key: 'data',
+            className: 'data',
             render: ( data, record ) =>{
                 if(data.length === 4 ){
 
@@ -148,9 +149,15 @@ class AccountDetails extends Component {
                         ) 
                     }                 
                 }else{
-                    return(
-                       <p> {JSON.stringify((data),null,4)}</p>
-                    )
+                    if(typeof(data) === 'string'){
+                        return(<p>
+                            {JSON.stringify((data).substr(0,12) + '...')}
+                        </p>)
+                    }else{
+                        return(
+                            <p> {JSON.stringify((data),null,4)}</p>
+                         )
+                    }
                 }
             }       
         },{

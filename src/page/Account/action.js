@@ -22,10 +22,14 @@ export const onCreateKey = (data, sucCb) =>{
 export const creatAccount = (data, sucCb) =>{
     axios.post('/1.0/app/token/create', data)
       .then(res => {
-        message.success('创建成功');
-        if(!!res){
-          if (!!sucCb) {
-            sucCb();
+        if(res.data.error){
+          message.error('创建失败')
+        }else{
+          message.success('创建成功');
+          if(!!res){
+            if (!!sucCb) {
+              sucCb();
+            }
           }
         }
       })
