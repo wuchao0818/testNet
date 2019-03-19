@@ -71,26 +71,13 @@ class smallCard extends Component {
                     <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                         <Card title={<div style={{textAlign:"left"}}>
                             <span>FO流通</span>
-                            <h3>{this.props.data.price}</h3>
+                            <h3 className ='fibos_eos'>{this.props.data.supply}</h3>
                             <span>锁仓：{this.props.data.reserve_supply}</span>
-                            </div>} bordered={false}>
-                            <p>cw：{this.props.data.b_cw}</p>
-                        </Card>
-                    </Col>
-                    <Col xs={24} sm={12} md={12} lg={6} xl={6}>
-                        <Card title={<div style={{textAlign:"left"}}>
-                                <span>跨链账户余额( fiboscouncil ) EOS</span>
-                            <h3 className ='fibos_eos'>{this.props.data.fibos_eos}</h3>
-                            <span>流通：{this.props.data.supply}</span>
                             </div>} bordered={false}>
                             <p className ='fibos_eos'>投票：{this.props.data.vote } { this.props.data.percent }%</p>
                         </Card>
                     </Col>
-                    </Row>
-                </div>
 
-                <div className = 'cardtwo'>
-                    <Row gutter={24}>
                     <Col xs={24} sm={12} md={12} lg={6} xl={6}>
                         <Card title={<div style={{textAlign:"left"}}>
                             <span>内存使用量(GB)</span>

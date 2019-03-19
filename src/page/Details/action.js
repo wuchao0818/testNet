@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { message } from 'antd'
 
-/* 获取持有代币 */
+/* 获取持有代币和锁仓代币 */
 export const getPermissions = (data,sucCb) => {
     axios.post('/v1/chain/get_table_rows', data )
     .then(res => {

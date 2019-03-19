@@ -40,10 +40,10 @@ class StartCard extends Component {
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={12} xl={12}>
                         <Card title="http&p2p" bordered={false}>
-                            <p style = {{marginBottom: 10}}>http://api.testnet.fo (支持history)
+                            <p style = {{marginBottom: 10}} className = 'p2p'>http://api.testnet.fo (支持history)
                               <a href = 'http://api.testnet.fo/v1/chain/get_info' style = {{marginLeft: 10}}>点击查看</a>
                             </p>
-                            <p>p2p.testnet.fo:80</p>
+                            <p className = 'p2p'>p2p.testnet.fo:80</p>
                         </Card>
                     </Col>
                     </Row>

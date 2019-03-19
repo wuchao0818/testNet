@@ -14,16 +14,16 @@ function initIronman (callback){
 
       const ironman = window.ironman;
       //防止别的网页应用 调用window.ironman 对象
-      // window.ironman = null;
+      window.ironman = null;
       // If you want to require a specific version of Scatter
 
-      // const foNetwork = {
-      //     protocol: 'http',
-      //     port: 80,
-      //     host: 'api.fibos.rocks',
-      //     blockchain: 'fibos',
-      //     chainId: '6aa7bd33b6b45192465afa3553dedb531acaaff8928cf64b70bd4c5e49b7ec6a'
-      // }
+      const foNetwork = {
+          protocol: 'http',
+          port: 80,
+          host: 'api.fibos.rocks',
+          blockchain: 'fibos',
+          chainId: '6aa7bd33b6b45192465afa3553dedb531acaaff8928cf64b70bd4c5e49b7ec6a'
+      }
 
       const RequirefoNetwork = {
           blockchain: 'fibos',
@@ -64,7 +64,7 @@ function initIronman (callback){
 class App extends Component {
 
   componentDidMount(){
-    // initIronman()
+      // initIronman()
   }
 
   render() {

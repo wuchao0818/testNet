@@ -34,7 +34,8 @@ class AccountDetails extends Component {
         super(props);
         this.state = {
             visible: false,
-            Tokens: [],
+            Tokens: [],  //持有代币
+            LockUp: [],//锁仓代币
             dataList:[],
             obj: {}
         };
@@ -70,12 +71,29 @@ class AccountDetails extends Component {
             table: "accounts",
         }
         actions.getPermissions(values, (data) =>{
-            console.log(data,'getPermissions')
+            // console.log(data,'getPermissions')
             this.setState({
                 Tokens: data.rows
             })
 
         })
+    }
+
+    getLockUp = () => {
+        let values = {
+            code: "eosio.token",
+            json: true,
+            scope: this.props.history.location.state.data.account_name,
+            table: "lockaccounts",
+        }
+        actions.getPermissions(values, (data) =>{
+            // console.log(data,'getLockUp')
+            this.setState({
+                LockUp: data.rows
+            })
+
+        })
+
     }
 
     getActions = () => {
@@ -93,11 +111,13 @@ class AccountDetails extends Component {
     componentDidMount(){   
         this.getPermissions()
         this.getActions()
+        this.getLockUp()
     }
 
     componentWillReceiveProps(){
         this.getPermissions()
         this.getActions()
+        this.getLockUp()
     }
       /* 将要更新数据的时候触发 */
     componentWillUpdate(){
@@ -118,6 +138,7 @@ class AccountDetails extends Component {
             title: '时间',
             dataIndex: 'time',
             key: 'time',
+            className: 'time'
         },
         {
             title: '交易类型',
@@ -133,19 +154,22 @@ class AccountDetails extends Component {
             title: '数据',
             dataIndex: 'data',
             key: 'data',
-            className: 'data',
             render: ( data, record ) =>{
                 if(data.length === 4 ){
 
-                    let color  = 'red'   
+                    let color  = '#1890ff'   
+                    let memoColor = {
+                        color: 'rgba(0, 0, 0, 0.45)',
+                        fontSize: '12px'
+                    }
                     if(data[0] === this.props.history.location.state.data.account_name){
                         return(
-                            <p><span style = {{color:color}}>{data[0]}</span> <Icon type="arrow-right" /> <span>{ data[1]}</span>，&nbsp;&nbsp; 金额：{ data[2] }， &nbsp;&nbsp;&nbsp; 备注：{ data[3]}</p>
+                            <p><span style = {{color:color}}>{data[0]}</span> <Icon type="arrow-right" /> <span>{ data[1]}</span>，&nbsp;&nbsp; 金额：<span style = {{color: color}}>{ data[2] }</span>， &nbsp;&nbsp;&nbsp; 备注：<span style = {memoColor}>{ data[3]}</span></p>
                         )  
                     } 
                     if(data[1] === this.props.history.location.state.data.account_name){
                         return(
-                            <p><span>{data[0]}</span> <Icon type="arrow-right" /> <span style = {{color:color}}>{ data[1]}</span>，&nbsp;&nbsp; 金额：{ data[2] }， &nbsp;&nbsp;&nbsp; 备注：{ data[3]}</p>
+                            <p><span>{data[0]}</span> <Icon type="arrow-right" /> <span style = {{color:color}}>{ data[1]}</span>，&nbsp;&nbsp; 金额：<span style = {{color: color}}>{ data[2] }</span>， &nbsp;&nbsp;&nbsp; 备注：<span style = {memoColor}>{ data[3]}</span></p>
                         ) 
                     }                 
                 }else{
@@ -198,7 +222,7 @@ class AccountDetails extends Component {
                 dataAction.push({
                     key: key,
                     id: value.block_num,
-                    time: util.formatDateTime(value.block_time),
+                    time: util.formatDateTime(value.block_time+'Z'),
                     type: value.action_trace.act.name,
                     data: (value.action_trace.act.data.from && value.action_trace.act.data.quantity) ? 
                           [value.action_trace.act.data.from, value.action_trace.act.data.to, value.action_trace.act.data.quantity.quantity ? value.action_trace.act.data.quantity.quantity : value.action_trace.act.data.quantity, value.action_trace.act.data.memo] :
@@ -225,6 +249,7 @@ class AccountDetails extends Component {
                         </Collapse>                      
                     </div>              
                 </div>
+                
                 <div className = 'currency'>
                     <Collapse defaultActiveKey={['1']}>
                         <Panel header="持有代币" key="1">
@@ -234,8 +259,8 @@ class AccountDetails extends Component {
                                     this.state.Tokens.map((value,index)=>{
                                         return(     
                                         <Col xs={24} sm={12} md={12} lg={6} xl={6} key = {index}>
-                                            <Card title = {`发行方：${value.balance.contract}`}>
-                                                <p>数量： {value.balance.quantity}</p>
+                                            <Card title = {`数量：${value.balance.quantity}`}>
+                                                <p>{`发行方：${value.balance.contract}`}</p>
                                             </Card>
                                         </Col>
                                         )
@@ -246,6 +271,31 @@ class AccountDetails extends Component {
                         </Panel>
                     </Collapse>
                 </div>
+
+                <div className = 'currency'>
+                    <Collapse defaultActiveKey={['1']}>
+                        <Panel header="锁仓代币" key="1">
+                            <Row gutter={16}>
+                                
+                                {
+                                    this.state.LockUp.map((value,index)=>{
+                                        const lock_timestamp = util.formatDateTime(value.lock_timestamp+'Z')
+                                        return(     
+                                        <Col xs={24} sm={12} md={12} lg={6} xl={6} key = {index}>
+                                            <Card title = {`数量：${value.balance.quantity}`}>
+                                                <p style = {{ paddingBottom: 10 }}>{`发行方：${value.balance.contract}`}</p>
+                                                <p>{`锁仓时间：${lock_timestamp}`}</p>
+                                            </Card>
+                                        </Col>
+                                        )
+                                    })
+                                    }
+                                
+                            </Row>
+                        </Panel>
+                    </Collapse>
+                </div>
+
                 <div className = 'permissions'>
                     <Collapse defaultActiveKey={['1']}>
                             <Panel header="权限" key="1">
@@ -253,6 +303,7 @@ class AccountDetails extends Component {
                             </Panel>
                     </Collapse>
                 </div>
+
                 <div className = 'actions'>
                     <Tabs defaultActiveKey="1">
                         <TabPane tab="动作" key="1">                         

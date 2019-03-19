@@ -29,12 +29,9 @@ class Home extends Component {
             server_version_string: '', //版本
             server_version:'', //版本号
             diff: '' ,//相差
-
-            price: '0' , //FO流通数量
-            supply: '', //流通
+            // FO流通
+            supply: '1000000', //流通
             reserve_supply:'' ,//锁仓数量
-            b_cw: '', //CW 
-            fibos_eos: '10000000000', //账户垮链余额
             vote: '' ,//投票FO
             percent: '',//投票百分比
             // 内存
@@ -106,50 +103,15 @@ class Home extends Component {
         actions.postTable(true, 'eosio.token', 'eosio', 'stats',(data)=>{
              let rows = data.rows
              for(let i in rows){
-                const connectorWeight = rows[i].connector_weight
-                const reserveConnectorBalance = rows[i].reserve_connector_balance
-                const connectorBalance = rows[i].connector_balance
                 const reserveSupply = rows[i].reserve_supply
                 const supply = rows[i].supply
-                if (supply && supply.split(' ')[1] === 'FO') {
-                const supplyNumStr = supply.split(' FO')[0]
-                let supplyNumPre = 0
-                if (!!supplyNumStr && supplyNumStr.split('.').length >= 2) {
-                    supplyNumPre = supplyNumStr.split('.')[1].length
-                }
-                const bSupply = Number(supplyNumStr)
-                const bReserveSupply = Number(reserveSupply.split(' FO')[0])
-                const bCw = Number(connectorWeight)
-                const bBalances = Number(connectorBalance.split(' EOS')[0]) + Number(reserveConnectorBalance.split(' EOS')[0])
-                const price = (bCw * (bReserveSupply + bSupply) / bBalances)
-                    .toFixed(supplyNumPre, 8)
-
+                if (supply && supply.split(' ')[1] === 'FO') {           
                 this.setState({
-                    price: price + ' FO',
                     supply: supply,
                     reserve_supply: reserveSupply,
-                    b_cw: bCw
                 })
                 this.setVotePercent()
                 break
-                }
-            }
-        })
-    }
-
-    /* 垮链账户 */
-    getAccount = () => {
-        actions.postTable(true, 'eosio.token', 'fiboscouncil', 'accounts',(data) => {
-            let rows = data.rows
-            for (const i in rows) {
-                const {
-                  balance
-                } = rows[i]
-                if (balance && balance.quantity.split(' ')[1] === 'EOS') {
-                  this.setState({
-                    fibos_eos: (Number(this.state.fibos_eos) * 10000 - Number(balance.quantity.split(' ')[0]) * 10000) / 10000 + ''
-                  })  
-                  break
                 }
             }
         })
@@ -213,7 +175,6 @@ class Home extends Component {
     componentDidMount(){
         this.getData() 
         this.getFO()
-        this.getAccount()
         this.getmemory()
         this.getGlobal()
         this.timer = setInterval(() =>{

@@ -55,12 +55,18 @@ class Assets extends Component {
         const ram_available = data.ram_quota === -1 ? data.ram_quota : (ram_quota - ram_usage).toFixed(2)
         /* cpu */
         const cpu_available = data.cpu_limit.available === -1 ? data.cpu_limit.available : (data.cpu_limit.available/1000).toFixed(2)
-        const cpu_used = data.cpu_limit.used
+        const cpu_available_s = cpu_available > 10000 ? (cpu_available/1000).toFixed(2) : cpu_available
+        const cpu_used = data.cpu_limit.used/1000
+        const cpu_used_s = cpu_used > 10000 ? cpu_used/1000 : cpu_used
+
         const cpu_max = data.cpu_limit.max/1000
+        const cpu_max_s = cpu_max > 10000 ? (cpu_max/1000).toFixed(2) : cpu_max
         /* 网络 */
         const net_available = data.net_limit.available === -1 ? data.net_limit.available : (data.net_limit.available/1024).toFixed(2)
+        const net_available_mb = net_available > 10000 ? (net_available * 0.0009766).toFixed(2) : net_available
         const net_used = data.net_limit.used
-        const net_max = data.net_limit.max/1024
+        const net_max = (data.net_limit.max/1024).toFixed(2)
+        const net_max_mb = net_max > 10000 ? (net_max * 0.0009766).toFixed(2) : net_max
         /* FO 余额 */
         const FObalance = resources === -1 ? Number(quantity.FO) : Number(quantity.FO) + resources
 
@@ -75,19 +81,19 @@ class Assets extends Component {
         return (
             <div>
                 <Row gutter={16}>
-                    <Col xs={24} sm={12} md={12} lg={8} xl={8} style = {gridStyle}>
+                    {/* <Col xs={24} sm={12} md={12} lg={8} xl={8} style = {gridStyle}>
                         <Card bordered={false}>
                             <p className = 'balance'>FO 余额</p>
                             <p className = 'num'> {FObalance.toFixed(4)} <span className = 'balance'>FO</span></p>
                         </Card>
-                    </Col>
-                    <Col xs={24} sm={12} md={12} lg={8} xl={8} style = {gridStyle}>
+                    </Col> */}
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} style = {gridStyle}>
                         <Card  bordered={false}>
                             <p className = 'balance'>FO 可用余额</p>
                             <p className = 'num'> {quantity.FO} <span className = 'balance'>FO</span></p>                 
                         </Card>
                     </Col>
-                    <Col xs={24} sm={12} md={12} lg={8} xl={8} style = {gridStyle}>
+                    <Col xs={24} sm={12} md={12} lg={12} xl={12} style = {gridStyle}>
                         <Card  bordered={false}>
                             <p className = 'balance'>EOS 余额</p>
                             <p className = 'num'> {quantity.EOS} <span className = 'balance'>EOS</span></p>
@@ -102,7 +108,7 @@ class Assets extends Component {
                             <div>
                                 <Progress percent={ resources_percent } status="active" />
                             </div>
-                            {resources === -1 ? '' : <p className = 'resources'>{resources} / {FObalance.toFixed(4)}</p>}
+                            {resources === -1 ? '' : <p className = 'resources'>{resources} FO / {FObalance.toFixed(4)} FO</p>}
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={6} xl={6} style = {gridStyle}>
@@ -112,27 +118,31 @@ class Assets extends Component {
                             <div>
                                 <Progress percent={ram_percent} status="active" />
                             </div>
-                            {ram_available === -1 ? '' : <p className = 'resources'>{ram_usage.toFixed(2)} / {ram_quota.toFixed(2)}</p> }           
+                            {ram_available === -1 ? '' : <p className = 'resources'>{ram_usage.toFixed(2)} KB / {ram_quota.toFixed(2)} KB</p> }           
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={6} xl={6} style = {gridStyle}>
                         <Card  bordered={false}>
                             <p className = 'mortgage'>CPU</p>
-                            <p className = 'mortgagenum'><span className = 'number'>当前可用</span><span className = 'fo'> {cpu_available} MS</span></p>
+                            <p className = 'mortgagenum'><span className = 'number'>当前可用</span>
+                                {cpu_available > 10000 ? <span className = 'fo'> {cpu_available_s} S</span> : <span className = 'fo'> {cpu_available} MS</span>}
+                            </p>
                             <div>
                                 <Progress percent={cpu_percent} status="active" />
                             </div>
-                            {cpu_available === -1 ? '' : <p className = 'resources'>{cpu_used} / {cpu_max}</p>}
+                            {cpu_available === -1 ? '' : <p className = 'resources'>{cpu_used > 10000 ? cpu_used_s + ' S' : cpu_used + ' MS'} / {cpu_max > 10000 ? cpu_max_s + ' S' : cpu_max + ' MS'}</p>}
                         </Card>
                     </Col>
                     <Col xs={24} sm={12} md={12} lg={6} xl={6} style = {gridStyle}>
                         <Card  bordered={false}>
                             <p className = 'mortgage'>网络</p>
-                            <p className = 'mortgagenum'><span className = 'number'>当前可用</span><span className = 'fo'> {net_available} KB</span></p>
+                            <p className = 'mortgagenum'><span className = 'number'>当前可用</span>
+                                {net_available > 10000 ? <span className = 'fo'> {net_available_mb} MB</span> :<span className = 'fo'> {net_available} KB</span>}
+                            </p>
                             <div>
                                 <Progress percent={net_percent} status="active" />
                             </div>
-                            {net_available === -1 ? '' : <p className = 'resources'>{net_used} / {net_max.toFixed(2)}</p>}
+                            {net_available === -1 ? '' : <p className = 'resources'>{net_used} KB / {net_max > 10000 ? net_max_mb + 'MB': net_max + 'KB' }</p>}
                         </Card>
                     </Col>
                 </Row>

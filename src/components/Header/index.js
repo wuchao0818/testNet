@@ -1,6 +1,6 @@
 import React ,{ Component } from 'react';
 
-import { Layout, Menu, Icon, Col, Input, Popover} from 'antd';
+import { Layout, Menu, Icon, Col, Input, Popover, Form} from 'antd';
 
 import  * as actions from './action';
 
@@ -14,7 +14,7 @@ const SubMenu = Menu.SubMenu;
 const Search = Input.Search;
 
 
-class header extends Component {
+class FormHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {  
@@ -24,7 +24,6 @@ class header extends Component {
     }
 
     handleClick = (e) => {
-        console.log('click ', e);
         this.setState({
           current: e.key,
         });
@@ -62,6 +61,8 @@ class header extends Component {
     render(){
         const suffix =  <span />;
         const prefix =  <span />;
+
+        const { getFieldDecorator } = this.props.form;
   
         const content = (
             <Menu
@@ -97,8 +98,10 @@ class header extends Component {
                 <Header>
                     <Col xs={0} sm={0} md={14} lg={15} xl={18}>
                         <div className="logo" >
-                            <img src = {logo} alt = '' style = {{height: '32px'}}/>
-                            <span>Fun Testnet</span>
+                            <Link to="/">
+                                <img src = {logo} alt = '' style = {{height: '32px'}}/>
+                                <span>Fun Testnet</span>
+                            </Link>
                         </div> 
 
                         <Menu
@@ -117,14 +120,18 @@ class header extends Component {
                             账号
                             </span>}>
                                 <Menu.Item key="account">
-                                <span>
-                                    <Link to="/account">创建</Link>
-                                </span>
+                                    <Link to="/account">
+                                        <span>
+                                            创建
+                                        </span>
+                                    </Link>                              
                                 </Menu.Item>
                                 <Menu.Item key="reward">
-                                <span>
-                                    <Link to="/reward">空投</Link>
-                                </span>
+                                    <Link to="/reward">
+                                        <span>
+                                            空投
+                                        </span>
+                                    </Link>
                                 </Menu.Item>              
                             </SubMenu>
                         </Menu>
@@ -139,18 +146,27 @@ class header extends Component {
 
                     </Col>
                     <div>
-                        <Search
-                            suffix={suffix} 
-                            prefix = {prefix}
-                            placeholder="账号"
-                            onSearch={this.onSearch.bind(this)}
-                            className = 'serach'
-                            />
+                       <Form>
+                            
+                            {getFieldDecorator('account_name')(
+                                 <Search
+                                 suffix={suffix} 
+                                 prefix = {prefix}
+                                 placeholder="账号"
+                                 onSearch={this.onSearch.bind(this)}
+                                 className = 'serach'
+                                 />
+                            )}
+                        </Form>
                     </div>
                 </Header>
            </Layout>
         );
     }
 }
+
+
+const header = Form.create()(FormHeader);
+
 
 export default withRouter(header);
