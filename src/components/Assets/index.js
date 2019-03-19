@@ -81,12 +81,6 @@ class Assets extends Component {
         return (
             <div>
                 <Row gutter={16}>
-                    {/* <Col xs={24} sm={12} md={12} lg={8} xl={8} style = {gridStyle}>
-                        <Card bordered={false}>
-                            <p className = 'balance'>FO 余额</p>
-                            <p className = 'num'> {FObalance.toFixed(4)} <span className = 'balance'>FO</span></p>
-                        </Card>
-                    </Col> */}
                     <Col xs={24} sm={12} md={12} lg={12} xl={12} style = {gridStyle}>
                         <Card  bordered={false}>
                             <p className = 'balance'>FO 可用余额</p>

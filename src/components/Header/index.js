@@ -77,7 +77,7 @@ class FormHeader extends Component {
                 </Link>                  
             </Menu.Item>
 
-            <SubMenu title={<span className="submenu-title-wrapper" key="sub1"><Icon type="setting" />
+            <SubMenu title={<span className="submenu-title-wrapper" key="sub1"><Icon type="user-add" />
             账号
             </span>}>
                 <Menu.Item key="account">
@@ -116,7 +116,7 @@ class FormHeader extends Component {
                                 </Link>                  
                             </Menu.Item>
 
-                            <SubMenu title={<span className="submenu-title-wrapper" key="sub1"><Icon type="setting" />
+                            <SubMenu title={<span className="submenu-title-wrapper" key="sub1"><Icon type="user-add" />
                             账号
                             </span>}>
                                 <Menu.Item key="account">
