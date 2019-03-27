@@ -16,7 +16,7 @@ export const loginIronman = (sucCb) =>{
             blockchain: "fibos",
             chainId: config.client.chainId,
             host: config.client.httpEndpoint,
-            port: 3000,
+            port: 80,
             protocol: "http"
         };
 
