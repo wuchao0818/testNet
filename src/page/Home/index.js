@@ -168,7 +168,7 @@ class Home extends Component {
 
    componentWillMount(){
   
-    }
+   }
 
 
 

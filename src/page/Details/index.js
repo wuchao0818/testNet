@@ -71,7 +71,7 @@ class AccountDetails extends Component {
             table: "accounts",
         }
         actions.getPermissions(values, (data) =>{
-            // console.log(data,'getPermissions')
+            console.log(data,'getPermissions')
             this.setState({
                 Tokens: data.rows
             })
@@ -174,10 +174,12 @@ class AccountDetails extends Component {
                     }                 
                 }else{
                     if(typeof(data) === 'string'){
+                       
                         return(<p>
                             {JSON.stringify((data).substr(0,12) + '...')}
                         </p>)
                     }else{
+                        console.log(data)
                         return(
                             <p> {JSON.stringify((data),null,4)}</p>
                          )

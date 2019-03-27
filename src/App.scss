@@ -45,6 +45,11 @@ background: rgb(240, 242, 245);
       margin-top: 20px;
       margin-right: 20px;
     }
+    .LronmanName{
+      margin-right:10px;
+      color: #1890ff;
+      font-size: 12px;
+    }
     .serach{
       width: 300px;
     }
@@ -58,9 +63,9 @@ background: rgb(240, 242, 245);
   .p2p{
     letter-spacing: 0.5px;
   }
-}
-.chainID{
-  word-break: break-all;
+  .chainID{
+    word-break: break-all;
+  }
 }
 .card{
     margin-top: 60px;
@@ -94,7 +99,7 @@ background: rgb(240, 242, 245);
   }
   
   /* 表单 */
- .account,.accountsdetails,.reward{
+ .account,.accountsdetails,.reward,.transfer,.creatAcount,.mortgageContent{
     // background: $white;
     margin: 100px 40px 20px 40px;
     min-height: 70vh;
@@ -182,7 +187,37 @@ background: rgb(240, 242, 245);
     word-wrap: break-word;
   }
 
-  /* 脚步 */
+  /* 工具 */
+.transfer,.creatAcount,.mortgageContent{
+  .toolsHead{
+    .acount{
+      margin-bottom: 15px;
+    }
+    .progress{
+      display: flex;
+      border-bottom: 1px solid #e8e8e8;
+      padding-bottom: 10px;
+      .ant-progress-line{
+        width: 80%;
+      }
+    }
+    .progressNum{
+      color: rgb(48, 128, 254);
+      font-size: 14px;
+      padding-top: 20px;
+    }
+  }
+  .content{
+    padding-left: 30px;
+    width: 70%;
+  }
+}
+.transactionID{
+  padding-top: 15px;
+  color: rgb(48, 128, 254);
+}
+
+  /* 脚部 */
 .footer{
     text-align: center;
     margin: 3em 0 1em 0;
@@ -198,6 +233,8 @@ background: rgb(240, 242, 245);
           }
       }
   }
+
+
 
 
   @media (max-width: 768px){

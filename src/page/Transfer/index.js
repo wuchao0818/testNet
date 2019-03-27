@@ -1,0 +1,182 @@
+import React ,{ Component } from 'react';
+
+import {
+    Form, Input, Row, Col, Button, Select
+} from 'antd';
+
+import { loginIronman } from '../../model/ironman'
+import { transfer } from './action'
+import stroage from '../../model/stroage'
+import ToolAssets from '../../components/ToolHead'
+
+
+
+const Option = Select.Option;
+
+class TransferForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { 
+            account_name: '',
+            FO: '',
+            result: '',
+            loading: false
+        };
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+          if (!err) {
+            loginIronman((data, fo) => {
+                transfer(fo, values, (data) =>{
+                    if(data.transaction_id){
+                        this.setState({
+                            result: data.transaction_id,
+                            loading: true
+                        })
+
+                    }
+                })
+            })
+          }
+        });
+      }
+
+
+    componentDidMount(){
+        let account_name = stroage.get('acount')
+        if(account_name){
+            this.setState({
+                account_name: account_name,
+            })
+        }
+    }
+
+    componentWillReceiveProps(){
+        let account_name = stroage.get('acount')
+        if(account_name){
+            this.setState({
+                account_name: account_name,
+            })
+        }else{
+            this.setState({
+                account_name: '',
+            })
+        }     
+    }
+
+
+    render() {
+        const { getFieldDecorator } = this.props.form;
+
+        return (
+            <div className = 'transfer'>
+
+                <ToolAssets />
+                <div className = 'content'>
+                    <Form  onSubmit={this.handleSubmit}>
+                        <Form.Item
+                        label="转账账户"
+                        >
+                        {getFieldDecorator('from', {
+                            rules: [{
+                            required: true, message: '请输入转账用户!',
+                            }],
+                            initialValue: this.state.account_name
+                        })(
+                            <Input  disabled />
+                        )}
+                        </Form.Item>
+
+                        <Form.Item
+                        label="收款账户"
+                        >
+                        {getFieldDecorator('to', {
+                            rules: [{
+                            required: true, message: '请输入收款账户!',
+                            }],
+                        })(
+                            <Input />
+                        )}
+                        </Form.Item>
+
+                        <Row gutter={8}>
+                            <Col span={16}>
+                                <Form.Item
+                                    label="金额"
+                                    >
+                                    {getFieldDecorator('quantity', {
+                                        rules: [{
+                                        required: true, message: '请输入转账金额!',
+                                        },{
+                                            validator(rule, value, callback) {
+                                                if (value) {
+                                                    if (isNaN(Number( value ))) {
+                                                        callback('请输入数字')
+                                                        return
+                                                    }
+                                                }
+                                                callback()
+                                            }
+                                        }],
+                                    })(
+                                        <Input />
+                                    )}
+                                </Form.Item>
+                            </Col>
+
+
+                            <Col span={8}>
+                                <Form.Item
+                                    label="代币名称"
+                                    >
+                                    {getFieldDecorator('tokens', {
+                                        rules: [{
+                                        required: true, message: 'Please input your E-mail!',
+                                        }],
+                                        initialValue: 'FO@eosio'
+                                    })(
+                                        <Select
+                                            showSearch
+                                            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                        >
+                                            <Option value="FO">FO@eosio</Option>
+                                            <Option value="EOS">EOS@eosio</Option>
+                                            <Option value="FOD">FOD@eosio</Option>
+                                        </Select>,
+                                    )}
+                                </Form.Item>
+                            </Col>
+                        </Row>
+
+                        <Form.Item
+                        label="备注"
+                        >
+                        {getFieldDecorator('memo',{
+                            initialValue: ''
+                        })(
+                            <Input />
+                        )}
+                        </Form.Item>
+
+                        <Form.Item> 
+                            <Button type="primary" htmlType="submit">转账</Button>
+                        </Form.Item>
+                        
+                    </Form>
+                    {
+                        this.state.loading ? ( <div>
+                            <h4>交易结果</h4>
+                            <p className = 'transactionID'>交易ID：<span>{this.state.result}</span></p>   
+                        </div>):''
+                    }
+                </div>
+            </div>
+        );
+    }
+}
+
+const index = Form.create({ name: 'transfer' })(TransferForm);
+
+export default index;
