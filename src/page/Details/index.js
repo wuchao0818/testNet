@@ -71,7 +71,6 @@ class AccountDetails extends Component {
             table: "accounts",
         }
         actions.getPermissions(values, (data) =>{
-            console.log(data,'getPermissions')
             this.setState({
                 Tokens: data.rows
             })

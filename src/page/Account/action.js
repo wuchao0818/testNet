@@ -28,7 +28,7 @@ export const creatAccount = (data, sucCb) =>{
           message.success('创建成功');
           if(!!res){
             if (!!sucCb) {
-              sucCb();
+              sucCb(res);
             }
           }
         }

@@ -35,10 +35,15 @@ class Assets extends Component {
             if(value.balance.quantity.indexOf("EOS") > -1){
                 quantity.EOS = parseFloat(value.balance.quantity).toFixed(4)
             }
-
-            if(value.balance.quantity.indexOf("FO") > -1){
+            
+            let reg = RegExp(/FO/);
+            let regFod = RegExp(/FOD/);
+            if(regFod.test(value.balance.quantity)){
+                quantity.FOD = parseFloat(value.balance.quantity).toFixed(4)
+            }else if(reg.test(value.balance.quantity)){
                 quantity.FO = parseFloat(value.balance.quantity).toFixed(4)
             }
+
             return balance
         })
         
