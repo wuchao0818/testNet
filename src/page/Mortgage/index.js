@@ -44,7 +44,6 @@ class mortgageForm extends Component {
         this.props.form.validateFields((err, values) => {
           if (!err) {
             loginIronman((data, fo) =>{
-                console.log('Received values of form: ', values);
                 if(this.state.value === 'mortgage'){
                     values.transfer = this.state.transfer
                     delegatebw(fo, values ,(data) =>{

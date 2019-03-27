@@ -42,9 +42,8 @@ class AccountForm extends Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-            actions.creatAccount(values,() => {
-                this.props.form.resetFields()
-            })
+            actions.creatAccount(values)
+            this.props.form.resetFields();
             }
         });
     }
@@ -55,6 +54,7 @@ class AccountForm extends Component {
     
     
     render() {
+    
         const { getFieldDecorator } = this.props.form;
 
         const formItemLayout = {

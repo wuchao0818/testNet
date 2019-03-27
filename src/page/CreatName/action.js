@@ -29,7 +29,7 @@ export const newaccount = (fo, values, sucCb) =>{
 
     }).then(res =>{
       if(res.transaction_id){
-        message.success('成功')
+        message.success('操作成功')
       }
         if(!!res){
           if (!!sucCb) {
@@ -38,7 +38,7 @@ export const newaccount = (fo, values, sucCb) =>{
       }
     })
     .catch(err => {
-      message.error(err)
+      message.error('操作失败')
       console.log(err)
     })
   }

@@ -16,7 +16,7 @@ export const loginIronman = (sucCb) =>{
             blockchain: "fibos",
             chainId: config.client.chainId,
             host: config.client.httpEndpoint,
-            port: 8801,
+            port: 3000,
             protocol: "http"
         };
 
@@ -60,6 +60,9 @@ export const loginIronman = (sucCb) =>{
                 // console.log(ironman,'ironman')
 
                 // console.log(identity,'identity')
+                console.log(requiredFields,'requiredFields')
+                console.log(account,'account')
+                console.log(foNetwork,'foNetwork')
 
                 ironman.getArbitrarySignature(
                     "FO7vofnowtgynBkKEf9zaj7F6QQYtQoXwRxg49NBd3TRZD5JnrUW",
