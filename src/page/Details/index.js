@@ -180,7 +180,6 @@ class AccountDetails extends Component {
                             {JSON.stringify((data).substr(0,12) + '...')}
                         </p>)
                     }else{
-                        console.log(data)
                         return(
                             <p> {JSON.stringify((data),null,4)}</p>
                          )

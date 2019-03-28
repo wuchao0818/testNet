@@ -26,7 +26,6 @@ class TransferForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            console.log(values,'values')
           if (!err) {
             loginIronman((data, fo) => {
                 transfer(fo, values, (data) =>{

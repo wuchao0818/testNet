@@ -3,6 +3,9 @@ import React , { Component } from 'react';
 import ToolAssets from '../../components/ToolHead'
 import stroage from '../../model/stroage'
 
+import { loginIronman } from '../../model/ironman'
+import { buyram, sellram} from './action'
+
 import {
     Form, Input, Button, Radio, Row, Col, Select
 } from 'antd';
@@ -18,11 +21,11 @@ class memoryForm extends Component {
             value: 'buy',
             loading: false,
             disabled: false,
+            result: ''
           };
     }
 
     onChange = (e) => {
-        console.log(e.target.value)
         this.props.form.resetFields();
 
         this.setState({
@@ -34,7 +37,35 @@ class memoryForm extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            console.log(values,'222222222')
+            if (!err) {
+                loginIronman((data, fo) =>{
+                    if(this.state.value === 'buy'){
+                        buyram(fo, values ,(data) =>{
+                            if(data.transaction_id){
+                                this.setState({
+                                    result: data.transaction_id,
+                                    loading: true
+                                })
+    
+                            }
+                           
+                        })
+                    }
+    
+                    if(this.state.value === 'sell'){
+                        sellram(fo, values ,(data) =>{
+                            if(data.transaction_id){
+                                this.setState({
+                                    result: data.transaction_id,
+                                    loading: true
+                                })
+    
+                            }
+                        })
+                    }
+                })
+              }
+            
         })
     }
 
@@ -117,7 +148,7 @@ class memoryForm extends Component {
                                 <Form.Item
                                     label="数额"
                                     >
-                                    {getFieldDecorator( this.state.value === 'buy' ? 'quantity' : 'bytes', {
+                                    {getFieldDecorator( this.state.value === 'buy' ? 'quant' : 'bytes', {
                                         rules: [{
                                         required: true, message: '请输入数额!',
                                         },{
