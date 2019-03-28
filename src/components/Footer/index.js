@@ -2,6 +2,8 @@ import React ,{ Component } from 'react';
 
 import { Icon } from 'antd';
 
+import './index.scss';
+
 class Footer extends Component {
     constructor(props) {
         super(props);

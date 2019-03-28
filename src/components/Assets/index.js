@@ -2,6 +2,8 @@ import React ,{ Component } from 'react'
 
 import { Row, Col, Card, Progress } from 'antd';
 
+import './index.scss';
+
 const gridStyle = {
     textAlign: 'center',
   };

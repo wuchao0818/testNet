@@ -1,0 +1,47 @@
+/* 账户详情 */
+
+$white :#ffffff;
+.accountsdetails{
+    padding-top: 10px;
+    .accounts{
+      padding: 0 50px;
+      padding-bottom: 20px;
+      background: $white;
+      .ant-collapse-content > .ant-collapse-content-box{
+        padding: 16px 0;
+      }
+      .details{
+          padding: 20px 50px ;
+          border-bottom: 1px solid rgb(240,240,240);
+          .created{
+              margin-left: 20px;
+              font-size: 14px;
+              color: rgb(136,136,136)
+            }
+        }
+    }  
+    .currency,.permissions,.actions{
+      margin-top: 40px;
+      padding: 20px 50px;
+      background: $white;
+    }
+    .time{
+      width: 200px;
+    }
+    .detail{
+      width: 80px;
+    }
+    pre{
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+}
+
+@media (max-width: 768px){
+  .accountsdetails{
+    .accounts,.currency,.permissions,.actions{
+      padding: 20px 20px;
+    }
+
+  }
+}

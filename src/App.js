@@ -11,6 +11,7 @@ import Details from './page/Details/index'
 import Transfer from './page/Transfer/index'
 import CreatAcount from './page/CreatName/index'
 import Mortgage from './page/Mortgage/index'
+import Memory from './page/Memory/index'
 
 
 class App extends Component {
@@ -32,6 +33,7 @@ class App extends Component {
             <Route path="/transfer" component={ Transfer } />
             <Route path="/creatacount" component={ CreatAcount } />
             <Route path="/mortgage" component={ Mortgage } />
+            <Route path="/memory" component={ Memory } />
           </Switch>
           <Footer/>
         </div>

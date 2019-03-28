@@ -9,6 +9,7 @@ import { loginIronman, logoutIronman } from '../../model/ironman'
 import { Link, withRouter } from "react-router-dom";
 import logo from '../../image/logo.dd3b009c.svg'
 import menu from '../../image/menu.png'
+import './index.scss';
 
 
 const { Header } = Layout;
@@ -86,6 +87,7 @@ class FormHeader extends Component {
                 case 'transfer': this.setState({current: 'transfer'});break;
                 case 'creatacount': this.setState({current: 'creatacount'});break;
                 case 'mortgage': this.setState({current: 'mortgage'});break;
+                case 'memory': this.setState({current: 'memory'});break;
                 default: break;
             }
         }else {
@@ -156,12 +158,13 @@ class FormHeader extends Component {
                 </span>
                 </Menu.Item> 
 
-                {/* <Menu.Item key="memory">
+                <Menu.Item key="memory">
                 <span>
-                    <Link to="/">内存交易</Link>
+                    <Link to="/memory">内存交易</Link>
                 </span>
                 </Menu.Item> 
-                <Menu.Item key="vote">
+
+                {/* <Menu.Item key="vote">
                 <span>
                     <Link to="/">领取投票奖励</Link>
                 </span>
@@ -239,13 +242,13 @@ class FormHeader extends Component {
                                     </Link> 
                                 </Menu.Item> 
 
-                                {/* <Menu.Item key="memory">
-                                    <Link to="/">
+                                <Menu.Item key="memory">
+                                    <Link to="/memory">
                                         <span>内存交易</span>
                                     </Link> 
                                 </Menu.Item> 
 
-                                <Menu.Item key="vote">
+                                {/* <Menu.Item key="vote">
                                     <Link to="/">
                                         <span>领取投票奖励</span>
                                     </Link> 
@@ -255,7 +258,7 @@ class FormHeader extends Component {
                                     <Link to="/">
                                         <span>多重签名</span>
                                     </Link> 
-                                </Menu.Item>  */}
+                                </Menu.Item>   */}
 
                             </SubMenu>
 

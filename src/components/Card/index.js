@@ -2,6 +2,8 @@ import React ,{ Component } from 'react';
 
 import { Card , Row , Col, Spin, Progress} from 'antd';
 
+import './index.scss';
+
 
 
 class smallCard extends Component {

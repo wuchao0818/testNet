@@ -6,6 +6,8 @@ import util from '../../model/util'
 
 import Assets from '../../components/Assets/index'
 
+import './index.scss';
+
 
 
 const TabPane = Tabs.TabPane;

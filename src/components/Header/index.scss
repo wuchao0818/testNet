@@ -1,0 +1,72 @@
+/* 头部 */
+
+$white :#ffffff;
+
+.ant-layout-header{
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    background: $white;
+    padding: 0;
+    .ant-form{
+      line-height: 60px;
+    }
+
+    .logo{
+        float: left;
+        padding-left: 100px;
+        padding-right: 60px;
+        a{
+          color: #000000;
+          text-decoration: none;
+      
+        }
+      }
+
+    .ant-menu-horizontal{
+    width: 100%;
+    margin: auto;
+    height: 64px;
+    line-height: 64px;
+    border-bottom: none;
+    }
+    .smallmenuImg{
+      float: left;
+      width: 32px;
+      margin-top: 20px;
+      margin-right: 20px;
+    }
+    .LronmanName{
+      margin-right:10px;
+      color: #1890ff;
+      font-size: 12px;
+    }
+    .serach{
+      width: 300px;
+    }
+
+  }
+
+@media (max-width: 576px){
+  .ant-layout-header{
+    .serach{
+      margin-left:40px;
+      width: 125px;
+    }
+  }
+}
+@media (max-width: 768px){
+  .ant-layout-header{
+    .logo{
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .serach{
+      margin-left:40px;
+      width: 150px;
+    }
+  }
+  .ant-menu-submenu-arrow{
+    right: 0 !important;
+  } 
+}

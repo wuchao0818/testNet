@@ -1,6 +1,7 @@
 import  React ,{ Component } from 'react';
 
 import { Card , Row, Col, Spin} from 'antd';
+import './index.scss';
 
 class StartCard extends Component {
     constructor(props) {

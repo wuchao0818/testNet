@@ -105,9 +105,10 @@ class mortgageForm extends Component {
               <p style = {{paddingBottom: 10}}>注意：</p>
               <p>解除抵押后，资金将于三天后到账。</p>
             </div>
-          );
+        );
+        
         return (
-            <div className = 'mortgageContent'>
+            <div className = 'tools'>
                 <ToolAssets/>
                 <div className = 'content'>
 
@@ -134,7 +135,7 @@ class mortgageForm extends Component {
                         >
                         {getFieldDecorator('from', {
                             rules: [{
-                            required: true, message: 'Please input your E-mail!',
+                            required: true, message: '请填写抵押者账号!',
                             }],
                             initialValue: this.state.account_name
                         })(
@@ -147,7 +148,7 @@ class mortgageForm extends Component {
                         >
                         {getFieldDecorator('receiver', {
                             rules: [{
-                            required: true, message: '请填写接受者!',
+                            required: true, message: '请填写接受者账号!',
                             }],
                         })(
                             <Input />
@@ -212,13 +213,8 @@ class mortgageForm extends Component {
                         }
 
 
-                        <Form.Item> 
-                          
-                            {this.state.value === 'remove' ? 
-                                (<Button type="primary" htmlType="submit">取消抵押</Button>) : 
-                                (<Button type="primary" htmlType="submit">抵押</Button>)
-                            }
-
+                        <Form.Item>          
+                            <Button type="primary" htmlType="submit">{this.state.value === 'mortgage' ? '抵押' : '取消抵押'}</Button> 
                         </Form.Item>
                     </Form>
 

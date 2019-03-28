@@ -1,0 +1,40 @@
+/* 卡片 */
+
+.card{
+    margin-top: 60px;
+    .cardlist{
+      padding: 3em;
+    }
+    .cardtwo{
+      padding: 0 3em;
+    }
+    span{
+        color: rgba(0,0,0,.45);
+        font-size: 14px;
+        line-height: 22px;
+      }
+    h3{
+        font-size: 30px;
+        line-height: 38px;
+        color: #000000;
+        padding: 8px;
+    }
+    .fibos_eos{
+        overflow:hidden; 
+        text-overflow:ellipsis; 
+        white-space:nowrap; 
+    }
+  
+}
+
+@media (max-width: 768px){
+  .card{
+    .cardlist{
+      padding: 1em;
+    }
+  }
+
+}
+
+
+ 

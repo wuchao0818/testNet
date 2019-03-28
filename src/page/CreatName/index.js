@@ -79,7 +79,7 @@ class creatAcountForm extends Component {
         const { getFieldDecorator } = this.props.form;
 
         return (
-            <div className = 'creatAcount'>
+            <div className = 'tools'>
                 <ToolAssets/>
                 <div className = 'content'>
                     <h4>可以使用Ironman插件生成公私钥</h4>
