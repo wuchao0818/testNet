@@ -44,7 +44,6 @@ class FormHeader extends Component {
             pathName = 'transfer'
         }
         loginIronman((data) => {
-            // console.log(data,'data')
             let name = data.identity.accounts[0].name
             stroage.set('acount',name)
             this.setState({
@@ -59,7 +58,8 @@ class FormHeader extends Component {
         logoutIronman(()=>{
             this.setState({
                 show: true,
-                account_name: ''
+                account_name: '',
+                current: 'home'
             })
             stroage.remove('acount')
             this.props.history.push({pathname:'/'})
