@@ -39,7 +39,6 @@ class FormHeader extends Component {
     /* 登录Lronman */
     handLronman = () => {
         let pathName = window.location.pathname.split('/');
-        console.log()
         pathName = pathName[1] 
         if(pathName === 'details'){
             pathName = 'transfer'

@@ -16,7 +16,6 @@ class RewardForm extends Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-            console.log(values,'values')
             actions.getreward(values)   
             }
         });

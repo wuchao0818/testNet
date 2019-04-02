@@ -4,7 +4,6 @@ export const buyram = (fo, values, sucCb) =>{
   if(values.tokens === 'FO'){
     values.quant = Number(values.quant).toFixed(4)
     values.quant = values.quant + ' ' + values.tokens
-    console.log(values.quant,'quant')
     fo.buyram({
         payer: values.payer,
         receiver: values.receiver,
