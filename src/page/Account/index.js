@@ -20,16 +20,16 @@ class AccountForm extends Component {
     }
 
     randomName = () => {
-       let name =  config.randomName(false, 12)
-       this.setState({
-           name: name
-       })
-    //    console.log(name)
+        this.props.form.resetFields(`account`,[]); 
+        let name =  config.randomName(false, 12)
+        this.setState({
+            name: name
+        })
     }
 
     onCreateKey = () => {
         actions.onCreateKey({},(data)=>{
-            // console.log(data)
+            this.props.form.resetFields(['prikey','pubkey',[]]); 
             this.setState({
                 prikey: data.prikey,
                 pubkey: data.pubkey
@@ -42,8 +42,7 @@ class AccountForm extends Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-            actions.creatAccount(values)
-            this.props.form.resetFields();
+                actions.creatAccount(values)
             }
         });
     }
