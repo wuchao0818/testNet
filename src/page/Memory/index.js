@@ -1,7 +1,7 @@
 import React , { Component } from 'react';
 
 import ToolAssets from '../../components/ToolHead'
-import stroage from '../../model/stroage'
+import withStorage from '../../components/WrappedComponent/index';
 
 import { loginIronman } from '../../model/ironman'
 import { buyram, sellram} from './action'
@@ -17,7 +17,6 @@ class memoryForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            account_name: '',
             value: 'buy',
             loading: false,
             disabled: false,
@@ -69,28 +68,6 @@ class memoryForm extends Component {
         })
     }
 
-    componentDidMount(){
-        let account_name = stroage.get('acount')
-        if(account_name){
-            this.setState({
-                account_name: account_name,
-            })
-        }
-    }
-
-    componentWillReceiveProps(){
-        let account_name = stroage.get('acount')
-        if(account_name){
-            this.setState({
-                account_name: account_name,
-            })
-        }else{
-            this.setState({
-                account_name: '',
-            })
-        }
-       
-    }
     render() {
         const { getFieldDecorator } = this.props.form;
 
@@ -122,7 +99,7 @@ class memoryForm extends Component {
                             rules: [{
                             required: true, message: '请填写购买者账号!',
                             }],
-                            initialValue: this.state.account_name
+                            initialValue: this.props.accountName
                         })(
                             <Input disabled/>
                         )}
@@ -219,4 +196,4 @@ class memoryForm extends Component {
 
 const index = Form.create({ name: 'memory' })(memoryForm);
 
-export default index;
+export default withStorage(index);

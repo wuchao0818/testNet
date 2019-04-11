@@ -4,9 +4,11 @@ import {
     Form, Input, Row, Col, Button, Select
 } from 'antd';
 
+import withStorage from '../../components/WrappedComponent/index';
+
 import { loginIronman } from '../../model/ironman'
 import { transfer } from './action'
-import stroage from '../../model/stroage'
+
 import ToolAssets from '../../components/ToolHead'
 
 
@@ -17,7 +19,6 @@ class TransferForm extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            account_name: '',
             result: '',
             loading: false
         };
@@ -43,31 +44,9 @@ class TransferForm extends Component {
       }
 
 
-    componentDidMount(){
-        let account_name = stroage.get('acount')
-        if(account_name){
-            this.setState({
-                account_name: account_name,
-            })
-        }
-    }
-
-    componentWillReceiveProps(){
-        let account_name = stroage.get('acount')
-        if(account_name){
-            this.setState({
-                account_name: account_name,
-            })
-        }else{
-            this.setState({
-                account_name: '',
-            })
-        }     
-    }
-
-
     render() {
         const { getFieldDecorator } = this.props.form;
+        console.log(this.props,'WrappedComponent')
 
         return (
             <div className = 'tools'>
@@ -82,7 +61,7 @@ class TransferForm extends Component {
                             rules: [{
                             required: true, message: '请输入转账用户!',
                             }],
-                            initialValue: this.state.account_name
+                            initialValue: this.props.accountName
                         })(
                             <Input  disabled />
                         )}
@@ -175,4 +154,4 @@ class TransferForm extends Component {
 
 const index = Form.create({ name: 'transfer' })(TransferForm);
 
-export default index;
+export default withStorage(index);

@@ -1,7 +1,6 @@
 import React ,{ Component } from 'react';
 
-
-import stroage from '../../model/stroage'
+import withStorage from '../../components/WrappedComponent/index';
 
 
 import { loginIronman } from '../../model/ironman'
@@ -17,7 +16,6 @@ class creatAcountForm extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            account_name: '',
             result: '',
             loading: false,
             transfer: false
@@ -53,28 +51,6 @@ class creatAcountForm extends Component {
         });
       }
 
-    componentDidMount(){
-        let account_name = stroage.get('acount')
-        if(account_name){
-            this.setState({
-                account_name: account_name,
-            })
-        }
-    }
-
-
-    componentWillReceiveProps(){
-        let account_name = stroage.get('acount')
-        if(account_name){
-            this.setState({
-                account_name: account_name,
-            })
-        }else{
-            this.setState({
-                account_name: '',
-            })
-        }
-    }
     render() {
         const { getFieldDecorator } = this.props.form;
 
@@ -91,7 +67,7 @@ class creatAcountForm extends Component {
                             rules: [{
                             required: true, message: '请输入创建者账号!',
                             }],
-                            initialValue: this.state.account_name
+                            initialValue: this.props.accountName
                         })(
                             <Input disabled/>
                         )}
@@ -262,4 +238,4 @@ class creatAcountForm extends Component {
 
 const index = Form.create({ name: 'creatAcount' })(creatAcountForm);
 
-export default index;
+export default withStorage(index);

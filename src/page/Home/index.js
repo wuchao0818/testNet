@@ -166,9 +166,8 @@ class Home extends Component {
         })
     }
 
-   componentWillMount(){
-  
-   }
+    componentWillMount(){
+    }
 
 
 
@@ -192,7 +191,7 @@ class Home extends Component {
 
     render() {
         return (
-            <div style = {{padding: '0 1.5em'}}>
+            <div style = {{padding: '0 1.5em', minHeight: '74.2vh'}}>
                 <Card  data = {this.state}/>
                 <StartCard data = {this.state.chain_id}/>
 

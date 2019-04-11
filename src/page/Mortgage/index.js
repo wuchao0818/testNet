@@ -6,7 +6,8 @@ import { loginIronman } from '../../model/ironman'
 import { delegatebw, undelegatebw } from './action'
 
 import ToolAssets from '../../components/ToolHead'
-import stroage from '../../model/stroage'
+
+import withStorage from '../../components/WrappedComponent/index';
 
 
 import {
@@ -19,7 +20,6 @@ class mortgageForm extends Component {
         super(props);
         this.state = {  
             value: 'mortgage',
-            account_name: '',
             transfer: false,
             result: '',
             loading: false
@@ -74,28 +74,6 @@ class mortgageForm extends Component {
         });
       }
 
-    componentDidMount(){
-        let account_name = stroage.get('acount')
-        if(account_name){
-            this.setState({
-                account_name: account_name,
-            })
-        }
-    }
-
-    componentWillReceiveProps(){
-        let account_name = stroage.get('acount')
-        if(account_name){
-            this.setState({
-                account_name: account_name,
-            })
-        }else{
-            this.setState({
-                account_name: '',
-            })
-        }
-       
-    }
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -137,7 +115,7 @@ class mortgageForm extends Component {
                             rules: [{
                             required: true, message: '请填写抵押者账号!',
                             }],
-                            initialValue: this.state.account_name
+                            initialValue: this.props.accountName
                         })(
                             <Input disabled/>
                         )}
@@ -236,4 +214,4 @@ class mortgageForm extends Component {
 
 const index = Form.create({ name: 'mortgage' })(mortgageForm);
 
-export default index;
+export default withStorage(index);
