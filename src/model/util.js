@@ -26,6 +26,13 @@ var util = {
         date.getSeconds()
         return Str
     },
+
+     vote2stake(vote, votetime) {
+        votetime = votetime || Date.now();
+        const weight = ((votetime / 1000 - 946684800) / (24 * 60 * 60 * 7)) * (1 / 52);
+        return parseInt(Number(vote) / Math.pow(2, weight));
+    },
+  
     randomName(randomFlag, min, max){
         let str = ''
         let range = min

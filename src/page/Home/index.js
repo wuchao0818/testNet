@@ -1,5 +1,5 @@
 import React ,{ Component } from 'react';
-// import { Tabs, Icon} from 'antd';
+import { Tabs, Icon} from 'antd';
 import axios from 'axios'
 
 import  * as actions from './action'
@@ -7,14 +7,16 @@ import util from '../../model/util'
 
 import Card from '../../components/Card/index'
 import StartCard from '../../components/SmallCard/index'
-// import Block from '../components/Block'
+import Vote from '../../components/Vote'
+
+import './index.scss';
 // import Trading from '../components/Trading'
 
-// const IconFont = Icon.createFromIconfontCN({
-//     scriptUrl: '////at.alicdn.com/t/font_1075224_npc0ip0rnje.js',
-// });
+const IconFont = Icon.createFromIconfontCN({
+    scriptUrl: '//at.alicdn.com/t/font_1075224_4xp80ry9als.js',
+});
 
-// const TabPane = Tabs.TabPane;
+const TabPane = Tabs.TabPane;
 
 
 class Home extends Component {
@@ -195,16 +197,17 @@ class Home extends Component {
                 <Card  data = {this.state}/>
                 <StartCard data = {this.state.chain_id}/>
 
-                {/* <div className = 'tabs'>
-                    <Tabs defaultActiveKey="1" >
-                        <TabPane tab={<span><IconFont type="icon-icon-" />区块</span>} key="1">
-                            <Block/>
-                        </TabPane>
-                        <TabPane tab={<span><IconFont type="icon-jiaoyi" />交易</span>} key="2">
-                            <Trading/>
-                        </TabPane>
-                    </Tabs>
-                </div> */}
+                <div className = 'main'>
+                    <div className = 'tabs'>
+                        <Tabs defaultActiveKey="1" >
+                            <TabPane tab={<span><IconFont type="icon-navicon-tp" />投票</span>} key="1">
+                                <Vote/>
+                            </TabPane>
+
+                        </Tabs>
+                    </div> 
+                </div>
+
                 
             </div>
         );

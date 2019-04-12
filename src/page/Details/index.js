@@ -212,7 +212,7 @@ class AccountDetails extends Component {
                     return item.key + ' '
                 })
             })
-            return data
+            return dataSource
 
         })
 
