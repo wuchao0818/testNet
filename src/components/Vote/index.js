@@ -132,7 +132,7 @@ class Block extends Component {
         if(data.length > 0){
             data.map((value, key)=>{
                 let total_votes = Number(value.total_votes);
-                let last_claim_time = Number((value.last_claim_time).substring(0,13));
+                let last_claim_time = value.last_claim_time === 0 ? '' : util.formatDateTime(Number((value.last_claim_time).substring(0,13)));
                 let vote = Number(util.vote2stake(value.total_votes, new Date().getTime())/10000);
                 dataSource.push({
                     key: key,
@@ -142,7 +142,7 @@ class Block extends Component {
                     weight: total_votes.toFixed(2).replace(/\B(?=(?:\d{3})+\b)/g, ','),
                     proportion: (total_votes / VoteWeight).toFixed(4)+'%',
                     block: value.unpaid_blocks,
-                    time: util.formatDateTime(last_claim_time),
+                    time: last_claim_time,
                     http: value.url
                 })
                 return dataSource
