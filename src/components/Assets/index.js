@@ -71,7 +71,7 @@ class Assets extends Component {
         /* 网络 */
         const net_available = data.net_limit.available === -1 ? data.net_limit.available : (data.net_limit.available/1024).toFixed(2)
         const net_available_mb = net_available > 10000 ? (net_available * 0.0009766).toFixed(2) : net_available
-        const net_used = data.net_limit.used
+        const net_used = (data.net_limit.used / 1024).toFixed(2)
         const net_max = (data.net_limit.max/1024).toFixed(2)
         const net_max_mb = net_max > 10000 ? (net_max * 0.0009766).toFixed(2) : net_max
         /* FO 余额 */
