@@ -9,13 +9,15 @@ export const loginIronman = (sucCb) =>{
         window.open("https://foironman.com/");
     } else {
         const ironman = window.ironman;
+        const hostname = window.location.hostname
+
         // 防止别的网页应用 调用window.ironman 对象
         // window.ironman = null;
         // If you want to require a specific version of Scatter
         const foNetwork = {
             blockchain: "fibos",
             chainId: config.client.chainId,
-            host: config.client.httpEndpoint,
+            host: hostname,
             port: 80,
             protocol: "http"
         };
@@ -102,6 +104,7 @@ export function loadIronman(sucCb) {
     if (!window.ironman) {
         window.open("https://foironman.com/");
     } else {
+        const hostname = window.location.hostname
         const ironman = window.ironman;
         // 防止别的网页应用 调用window.ironman 对象
         // window.ironman = null;
@@ -109,8 +112,8 @@ export function loadIronman(sucCb) {
         const foNetwork = {
             blockchain: "fibos",
             chainId: config.client.chainId,
-            host:  config.client.httpEndpoint,
-            port: 8081,
+            host:  hostname,
+            port: 80,
             protocol: "http"
         };
 

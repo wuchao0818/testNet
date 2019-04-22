@@ -46,7 +46,6 @@ class TransferForm extends Component {
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        console.log(this.props,'WrappedComponent')
 
         return (
             <div className = 'tools'>

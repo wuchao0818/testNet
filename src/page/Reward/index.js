@@ -2,22 +2,38 @@ import React ,{ Component } from 'react';
 import  * as actions from './action'
 
 import {
-    Form, Input, Button,
+    Form, Input, Button, Radio
   } from 'antd';
 
 class RewardForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {  };
+        this.state = {
+            value: 'FO'
+         };
     }
 
 
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
+            console.log(values,'values')
             if (!err) {
-            actions.getreward(values)   
+                if(values.radio === 'FO'){ 
+                    delete values.radio
+                    actions.getreward(values)   
+                }else if(values.radio === 'FOD'){
+                    delete values.radio
+                    actions.getrewardFod(values)
+                }
             }
+        });
+    }
+
+    onChange = (e) => {
+        this.props.form.resetFields();
+        this.setState({
+            value: e.target.value,
         });
     }
 
@@ -61,6 +77,17 @@ class RewardForm extends Component {
                             })(
                                 <Input />
                             )}      
+                    </Form.Item>
+
+                    <Form.Item {...formItemLayout} label="代币名称">
+                    {getFieldDecorator('radio',{
+                        initialValue: this.state.value
+                    })(
+                        <Radio.Group>
+                            <Radio value="FO">FO</Radio>
+                            <Radio value="FOD">FOD</Radio> 
+                        </Radio.Group>
+                    )} 
                     </Form.Item>
 
                     <Form.Item   {...tailFormItemLayout}> 
