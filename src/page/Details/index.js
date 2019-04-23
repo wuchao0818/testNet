@@ -241,7 +241,7 @@ class AccountDetails extends Component {
             <div className = 'accountsdetails'>
                 <div className = 'accounts'>
                     <div className = 'details'>
-                        <h3>{data.account_name}  <span className = 'created'>创建于 {util.formatDateTime(data.created)}</span></h3>
+                        <h3>{data.account_name}  <span className = 'created'>创建于 {util.formatDateTime(data.created+'Z')}</span></h3>
                     </div> 
                     <div style = {{paddingTop: '30px'}}>                       
                         <Collapse defaultActiveKey={['1']}>
